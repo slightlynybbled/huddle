@@ -16,6 +16,12 @@
     "maximum": 6
   },
 
+  "application": {
+    "path": "",
+    "stop": "",
+    "start": ""
+  },
+
   "pre-pull scripts": [],
   "post-pull scripts": [
     "",

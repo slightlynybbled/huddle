@@ -3,6 +3,7 @@ import time
 import sys
 import json
 import logging
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +13,7 @@ class AutoDeploy:
         self.config = {}
         self.load_and_validate(path_to_config)
 
-        self.run()
+        self.run(self.config)
 
     def load_and_validate(self, path_to_config):
         try:
@@ -38,8 +39,22 @@ class AutoDeploy:
     def post_pull_scripts(self, config=None):
         pass
 
-    def run(self):
+    def run(self, config):
+        configuration = config if config else self.config
+
         while True:
 
+            # determine the sleep time
+            sleep_time = 60  # default
+            if 'timing' in configuration.keys():
+                if 'minimum' in configuration['timing'] and 'maximum' in configuration['timing']:
+                    min_time = int(configuration['timing']['minimum'])
+                    max_time = int(configuration['timing']['maximum'])
+                    sleep_time = random.randint(min_time, max_time)
+                    logger.debug('minimum sleep time: {} maximum sleep time: {} '.format(min_time, max_time))
+                elif 'minimum' in configuration['timing']:
+                    sleep_time = int(configuration['timing']['minimum'])
 
-            time.sleep(60)
+            logger.debug('sleeping for {}s'.format(sleep_time))
+
+            time.sleep(sleep_time)
