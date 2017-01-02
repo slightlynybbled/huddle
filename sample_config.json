@@ -1,3 +1,24 @@
 {
-  repository: {}
+  "repository": {
+    "url": "",
+    "ssh key": "",
+    "branch": "",
+    "type": "git"
+  },
+
+  "test": {
+    "url": "",
+    "pass response": ""
+  },
+
+  "timing": {
+    "minimum": 2,
+    "maximum": 6
+  },
+
+  "pre-pull scripts": [],
+  "post-pull scripts": [
+    "",
+    "sudo reboot"
+  ]
 }
