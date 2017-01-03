@@ -1,24 +1,14 @@
 {
   "repository": {
-    "url": "",
-    "ssh key": "",
-    "branch": "",
-    "type": "git"
-  },
-
-  "test": {
-    "url": "",
-    "pass response": ""
+    "remote": "origin",
+    "remote path": "D:/_code/git_ex_1",
+    "local path": "D:/_code/git_ex_2",
+    "branch": "master",
+    "executable": "C:/Program Files/Git/bin/git"
   },
 
   "timing": {
-    "minimum": 2,
-    "maximum": 6
-  },
-
-  "pre-pull scripts": [],
-  "post-pull scripts": [
-    "",
-    "sudo reboot"
-  ]
+    "minimum": 10,
+    "maximum": 20
+  }
 }

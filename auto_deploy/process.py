@@ -4,6 +4,7 @@ import sys
 import json
 import logging
 import random
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,7 @@ class AutoDeploy:
         self.run(self.config)
 
     def load_and_validate(self, path_to_config):
+        # save the configuration from the file to the local conriguration
         try:
             with open(path_to_config, 'r') as f:
                 self.config = json.load(f)
@@ -25,14 +27,20 @@ class AutoDeploy:
             logger.debug('path "{}" not found'.format(path_to_config))
             sys.exit(1)
 
+        # find the local executable
         if 'executable' in self.config['repository'].keys():
             self.exec = self.config['repository']['executable']
         else:
             if sys.platform == 'win32':
                 self.exec = 'C:/Program Files/Git/bin/git'
 
+        os.chdir(self.config['repository']['local path'])
+
+        # todo: if the local directory does not exist, then it must be cloned and checked out
+
     def get_branch(self, config=None):
         configuration = config if config else self.config
+
         if 'branch' in configuration['repository'].keys():
             return configuration['repository']['branch']
         else:
@@ -42,24 +50,22 @@ class AutoDeploy:
         configuration = config if config else self.config
 
         local_branch = self.get_branch(configuration)
-        p = subprocess.Popen([self.exec, 'fetch', 'origin', local_branch], stdout=subprocess.PIPE)
-        stdout = ''
-        for line in p.stdout:
-            stdout += line.decode('utf-8')
-        logger.debug('fetch output: {}'.format(stdout))
+        remote_branch = configuration['repository']['remote'] + '/' + local_branch
 
-        remote_branch = 'origin/' + local_branch
-        p = subprocess.Popen([self.exec, 'diff', local_branch, remote_branch], stdout=subprocess.PIPE)
+        script = '{} fetch origin {}'.format(self.exec, local_branch)
+        out = self.run_script(script)
+        logger.debug('fetch output: {}'.format(out))
 
-        stdout = ''
-        for line in p.stdout:
-            stdout += line.decode('utf-8')
-        logger.debug('diff output: {}'.format(stdout))
+        script = '{} diff {} {}'.format(self.exec, local_branch, remote_branch)
+        out = self.run_script(script)
+        logger.debug('diff output: {}'.format(out))
 
         # if the output is blank, then the remote branch and the local branch are the same
-        if stdout.strip() == '':
+        if out.strip() == '':
+            logger.debug('is not new')
             return False
         else:
+            logger.debug('is new')
             return True
 
     def tests_pass(self, config=None):
@@ -68,6 +74,7 @@ class AutoDeploy:
         if 'test' in configuration.keys():
             raise NotImplementedError('')
         else:
+            logger.debug('no tests specified')
             return True
 
     def run_script(self, script):
@@ -94,12 +101,12 @@ class AutoDeploy:
 
     def pull(self, config=None):
         configuration = config if config else self.config
-        p = subprocess.Popen([self.exec, 'fetch', 'origin', self.get_branch(configuration)], stdout=subprocess.PIPE)
 
-        stdout = ''
-        for line in p.stdout:
-            stdout += line.decode('utf-8')
-        logger.debug('pull output: {}'.format(stdout))
+        remote = configuration['repository']['remote']
+        script = '{} pull {} {}'.format(self.exec, remote, self.get_branch(configuration))
+        out = self.run_script(script)
+
+        logger.debug('pull output: {}'.format(out))
 
     def post_pull_scripts(self, config=None):
         configuration = config if config else self.config

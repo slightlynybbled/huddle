@@ -1,14 +1,16 @@
 {
   "repository": {
-    "url": "",
+    "remote": "origin",
+    "remote path": "D:/_code/git_ex_1",
+    "local path": "D:/_code/git_ex_2",
     "ssh key": "",
-    "branch": "",
+    "branch": "master",
     "type": "git",
     "executable": "/usr/bin/git"
   },
 
   "test": {
-    "url": "",
+    "remote": "",
     "pass response": ""
   },
 
@@ -22,12 +24,6 @@
     "stop": "",
     "start": ""
   },
-
-  "pre-pull scripts": [],
-  "post-pull scripts": [
-    "",
-    "sudo reboot"
-  ],
 
   "scripts": {
     "pre-pull": [],
