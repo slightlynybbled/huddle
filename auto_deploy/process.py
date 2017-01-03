@@ -21,6 +21,11 @@ class AutoDeploy:
         self.run(self.config)
 
     def load_and_validate(self, config=None):
+        """
+        Sets the local executable and takes care of other initialization tasks
+        :param config: dictionary containing the configuration
+        :return:
+        """
         configuration = config if config else self.config
 
         # find the local executable
@@ -35,6 +40,12 @@ class AutoDeploy:
         # todo: if the local directory does not exist, then it must be cloned and checked out
 
     def get_branch(self, config=None):
+        """
+        Returns the local branch from the configuration
+
+        :param config: dictionary containing the configuration
+        :return: the branch name from the configuration
+        """
         configuration = config if config else self.config
 
         if 'branch' in configuration['repository'].keys():
@@ -43,6 +54,12 @@ class AutoDeploy:
             return 'master'
 
     def is_new(self, config=None):
+        """
+        Fetches the references from the remote repository and determines if the remote branch has new commits.
+
+        :param config: dictionary containing the configuration
+        :return: True if remote is new, else false
+        """
         configuration = config if config else self.config
 
         local_branch = self.get_branch(configuration)
@@ -65,6 +82,12 @@ class AutoDeploy:
             return True
 
     def tests_pass(self, config=None):
+        """
+        Determines if the test server is passing or failing on this branch
+
+        :param config: dictionary containing the configuration
+        :return: True if tests pass or False
+        """
         configuration = config if config else self.config
 
         if 'test' in configuration.keys():
@@ -74,6 +97,12 @@ class AutoDeploy:
             return True
 
     def run_script(self, script):
+        """
+        Will run a single command-line script and return the output
+
+        :param script: a string containing the script to be executed
+        :return: the command-line output
+        """
         parts = script.split()
         p = subprocess.Popen(parts, stdout=subprocess.PIPE)
 
@@ -83,6 +112,12 @@ class AutoDeploy:
         return stdout
 
     def pre_pull_scripts(self, config=None):
+        """
+        Runs all pre-pull scripts
+
+        :param config: dictionary containing the configuration
+        :return:
+        """
         configuration = config if config else self.config
 
         try:
@@ -96,6 +131,12 @@ class AutoDeploy:
             pass
 
     def pull(self, config=None):
+        """
+        Pulls the remote branch into the local branch
+
+        :param config:
+        :return:
+        """
         configuration = config if config else self.config
 
         remote = configuration['repository']['remote']
@@ -105,6 +146,12 @@ class AutoDeploy:
         logger.debug('pull output: {}'.format(out))
 
     def post_pull_scripts(self, config=None):
+        """
+        Runs all post-pull scripts
+
+        :param config: dictionary containing the configuration
+        :return:
+        """
         configuration = config if config else self.config
 
         try:
@@ -118,6 +165,12 @@ class AutoDeploy:
             pass
 
     def run(self, config):
+        """
+        Periodically runs the full script at the interval determined by the configuration
+
+        :param config: dictionary containing the configuration
+        :return:
+        """
         configuration = config if config else self.config
 
         while True:
