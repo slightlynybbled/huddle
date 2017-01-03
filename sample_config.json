@@ -3,7 +3,8 @@
     "url": "",
     "ssh key": "",
     "branch": "",
-    "type": "git"
+    "type": "git",
+    "executable": "/usr/bin/git"
   },
 
   "test": {
