@@ -66,19 +66,24 @@ class AutoDeploy:
         else:
             return True
 
+    def run_script(self, script):
+        parts = script.split()
+        p = subprocess.Popen(parts, stdout=subprocess.PIPE)
+
+        stdout = ''
+        for line in p.stdout:
+            stdout += line.decode('utf-8')
+        return stdout
+
     def pre_pull_scripts(self, config=None):
         configuration = config if config else self.config
 
         try:
             for script in configuration['scripts']['pre-pull']:
-                parts = script.split()
-                p = subprocess.Popen(parts, stdout=subprocess.PIPE)
+                out = self.run_script(script)
 
-                stdout = ''
-                for line in p.stdout:
-                    stdout += line.decode('utf-8')
                 logger.debug('script: {}'.format(script))
-                logger.debug('script output: {}'.format(stdout))
+                logger.debug('script output: {}'.format(out))
 
         except KeyError:
             pass
@@ -97,14 +102,10 @@ class AutoDeploy:
 
         try:
             for script in configuration['scripts']['post-pull']:
-                parts = script.split()
-                p = subprocess.Popen(parts, stdout=subprocess.PIPE)
+                out = self.run_script(script)
 
-                stdout = ''
-                for line in p.stdout:
-                    stdout += line.decode('utf-8')
                 logger.debug('script: {}'.format(script))
-                logger.debug('script output: {}'.format(stdout))
+                logger.debug('script output: {}'.format(out))
 
         except KeyError:
             pass
