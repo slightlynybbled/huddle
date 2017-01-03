@@ -41,22 +41,26 @@ class AutoDeploy:
     def is_new(self, config=None):
         configuration = config if config else self.config
 
-        branch_name = self.get_branch(configuration)
-        p = subprocess.Popen([self.exec, 'fetch', 'origin', branch_name], stdout=subprocess.PIPE)
+        local_branch = self.get_branch(configuration)
+        p = subprocess.Popen([self.exec, 'fetch', 'origin', local_branch], stdout=subprocess.PIPE)
         stdout = ''
         for line in p.stdout:
             stdout += line.decode('utf-8')
         logger.debug('fetch output: {}'.format(stdout))
 
-        remote_branch = 'origin/' + branch_name
-        p = subprocess.Popen([self.exec, 'diff', 'origin', branch_name, remote_branch], stdout=subprocess.PIPE)
+        remote_branch = 'origin/' + local_branch
+        p = subprocess.Popen([self.exec, 'diff', local_branch, remote_branch], stdout=subprocess.PIPE)
 
         stdout = ''
         for line in p.stdout:
             stdout += line.decode('utf-8')
         logger.debug('diff output: {}'.format(stdout))
 
-        # todo: check the stdout
+        # if the output is blank, then the remote branch and the local branch are the same
+        if stdout.strip() == '':
+            return False
+        else:
+            return True
 
     def tests_pass(self, config=None):
         configuration = config if config else self.config
