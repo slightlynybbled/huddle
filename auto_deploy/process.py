@@ -67,13 +67,47 @@ class AutoDeploy:
             return True
 
     def pre_pull_scripts(self, config=None):
-        pass
+        configuration = config if config else self.config
+
+        try:
+            for script in configuration['scripts']['pre-pull']:
+                parts = script.split()
+                p = subprocess.Popen(parts, stdout=subprocess.PIPE)
+
+                stdout = ''
+                for line in p.stdout:
+                    stdout += line.decode('utf-8')
+                logger.debug('script: {}'.format(script))
+                logger.debug('script output: {}'.format(stdout))
+
+        except KeyError:
+            pass
 
     def pull(self, config=None):
-        pass
+        configuration = config if config else self.config
+        p = subprocess.Popen([self.exec, 'fetch', 'origin', self.get_branch(configuration)], stdout=subprocess.PIPE)
+
+        stdout = ''
+        for line in p.stdout:
+            stdout += line.decode('utf-8')
+        logger.debug('pull output: {}'.format(stdout))
 
     def post_pull_scripts(self, config=None):
-        pass
+        configuration = config if config else self.config
+
+        try:
+            for script in configuration['scripts']['post-pull']:
+                parts = script.split()
+                p = subprocess.Popen(parts, stdout=subprocess.PIPE)
+
+                stdout = ''
+                for line in p.stdout:
+                    stdout += line.decode('utf-8')
+                logger.debug('script: {}'.format(script))
+                logger.debug('script output: {}'.format(stdout))
+
+        except KeyError:
+            pass
 
     def run(self, config):
         configuration = config if config else self.config
@@ -83,7 +117,9 @@ class AutoDeploy:
                 logger.debug('branch is new')
 
                 if self.tests_pass():
-                    pass
+                    self.pre_pull_scripts()
+                    self.pull()
+                    self.post_pull_scripts()
 
             # determine the sleep time
             sleep_time = 60  # default

@@ -27,5 +27,10 @@
   "post-pull scripts": [
     "",
     "sudo reboot"
-  ]
+  ],
+
+  "scripts": {
+    "pre-pull": [],
+    "post-pull": []
+  }
 }
