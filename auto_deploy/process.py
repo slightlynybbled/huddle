@@ -1,7 +1,6 @@
 import subprocess
 import time
 import sys
-import json
 import logging
 import random
 import os
@@ -10,31 +9,28 @@ logger = logging.getLogger(__name__)
 
 
 class AutoDeploy:
-    def __init__(self, path_to_config):
-        self.config = {}
+    def __init__(self, config):
+        """
+
+        :param config: a dictionary containing the configuration
+        """
+        self.config = config
         self.exec = '/usr/bin/git'  # default executable (linux)
-        self.load_and_validate(path_to_config)
+        self.load_and_validate()
 
         self.run(self.config)
 
-    def load_and_validate(self, path_to_config):
-        # save the configuration from the file to the local conriguration
-        try:
-            with open(path_to_config, 'r') as f:
-                self.config = json.load(f)
-            logger.debug(self.config)
-        except FileNotFoundError:
-            logger.debug('path "{}" not found'.format(path_to_config))
-            sys.exit(1)
+    def load_and_validate(self, config=None):
+        configuration = config if config else self.config
 
         # find the local executable
-        if 'executable' in self.config['repository'].keys():
-            self.exec = self.config['repository']['executable']
+        if 'executable' in configuration['repository'].keys():
+            self.exec = configuration['repository']['executable']
         else:
             if sys.platform == 'win32':
                 self.exec = 'C:/Program Files/Git/bin/git'
 
-        os.chdir(self.config['repository']['local path'])
+        os.chdir(configuration['repository']['local path'])
 
         # todo: if the local directory does not exist, then it must be cloned and checked out
 
