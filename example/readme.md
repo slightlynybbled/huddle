@@ -1,9 +1,27 @@
-# Demo
+# Installation
 
-The `demo.py` file shows an example of how to use the auto-deploy in its current form.
+Install:
 
-The `demo_config.json` file shows a currently working and tested configuration using a dummy project from github.
+    python setup.py install
+    
+Only standard library is utilized currently, no external packages required.
+    
+# Configuration
 
-To run the project, simply:
+Multiple JSON files may be stored in a directory.  Any files prefixed with an underscore `_` will be ignored.
+Files must have the extension `.json`.
 
-`python -m demo.py`
+## Fields
+
+All valid fields can be found in `./auto_deploy/example/_sample_config.json`.  An example of a working script
+may be found in `./auto_deploy/example/demo_config.json`.
+
+# Running
+
+Once installed, simply call the `auto_deploy` script from the command line using the appropriate configuration
+path:
+
+    auto_deploy --config "C:\example"
+    
+All valid JSON configuration files that are contained within 'example' will each be managed on its own thread.
+

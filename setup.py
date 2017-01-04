@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='auto_deploy',
-    packages=find_packages(),
+
     version='0.0.1dev0',
     description='A server-oriented auto-deployment utility',
     author='Jason Jones',
@@ -13,5 +13,7 @@ setup(
     url='https://github.com/slightlynybbled/auto_deploy',
     keywords=['auto-deployment'],
     classifiers=[],
-    install_requires=requirements
+    install_requires=requirements,
+    packages=find_packages(),
+    entry_points={'console_scripts': ['auto_deploy = auto_deploy.__main__:main']}
 )

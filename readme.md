@@ -18,6 +18,10 @@ sync changes, and stop/start/reboot the application.
 This is a new project.  The configuration file format will likely change.  Everything will likely change.  Don't
 depend on this just yet.
 
+# Installation
+
+Install with `python setup.py install`.
+
 # Future
 
 In the future, it is planned that this project will be able to clone, test, run, stop and basically manage a number
