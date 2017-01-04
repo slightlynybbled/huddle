@@ -1,8 +1,8 @@
 {
   "repository": {
     "remote": "origin",
-    "remote path": "D:/_code/git_ex_1",
-    "local path": "D:/_code/git_ex_2",
+    "remote path": "https://github.com/slightlynybbled/auto_deploy.git",
+    "local path": "C:/_code/_git_example",
     "branch": "master",
     "executable": "C:/Program Files/Git/bin/git"
   },

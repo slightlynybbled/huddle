@@ -5,10 +5,8 @@ import json
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
-logger.debug('from demo')
-
-with open('config.json', 'r') as f:
+with open('demo_config.json', 'r') as f:
     config = json.load(f)
-logger.debug(config)
+logger.debug('config: '.format(config))
 
 ad = process.AutoDeploy(config)
