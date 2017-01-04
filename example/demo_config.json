@@ -1,7 +1,7 @@
 {
   "repository": {
     "remote": "origin",
-    "remote path": "https://github.com/slightlynybbled/auto_deploy.git",
+    "remote path": "https://github.com/slightlynybbled/dummy.git",
     "local path": "C:/_code/_git_example",
     "branch": "master",
     "executable": "C:/Program Files/Git/bin/git"
@@ -10,5 +10,9 @@
   "timing": {
     "minimum": 10,
     "maximum": 20
+  },
+
+  "application": {
+    "start": "python -m dummy_app.py"
   }
 }

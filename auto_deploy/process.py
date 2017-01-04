@@ -16,8 +16,9 @@ class AutoDeploy:
         """
         self.config = config
         self.exec = '/usr/bin/git'  # default executable (linux)
-        self.load_and_validate()
+        self.app_ref = None
 
+        self.load_and_validate()
         self.run(self.config)
 
     def load_and_validate(self, config=None):
@@ -52,6 +53,7 @@ class AutoDeploy:
             logger.debug('path found: {}'.format(configuration['repository']['local path']))
 
         os.chdir(configuration['repository']['local path'])
+        self.start_application(configuration)
 
     def run_script(self, script):
         """
@@ -178,6 +180,24 @@ class AutoDeploy:
         except KeyError:
             pass
 
+    def stop_application(self):
+        if self.app_ref:
+            if sys.platform == 'win32':
+                script = 'Taskkill /PID {} /F'.format(self.app_ref.pid)
+            else:
+                script = 'kill {}'.format(self.app_ref.pid)
+
+            self.run_script(script)
+            self.app_ref = None
+
+    def start_application(self, config=None):
+        configuration = config if config else self.config
+
+        if 'application' in configuration.keys():
+            if 'start' in configuration['application'].keys():
+                parts = configuration['application']['start'].split()
+                self.app_ref = subprocess.Popen(parts, stdout=subprocess.PIPE)
+
     def run(self, config):
         """
         Periodically runs the full script at the interval determined by the configuration
@@ -192,9 +212,11 @@ class AutoDeploy:
                 logger.debug('branch is new')
 
                 if self.tests_pass():
+                    self.stop_application()
                     self.pre_pull_scripts()
                     self.pull()
                     self.post_pull_scripts()
+                    self.start_application()
 
             # determine the sleep time
             sleep_time = 60  # default

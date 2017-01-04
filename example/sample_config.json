@@ -1,9 +1,8 @@
 {
   "repository": {
     "remote": "origin",
-    "remote path": "D:/_code/git_ex_1",
-    "local path": "D:/_code/git_ex_2",
-    "ssh key": "",
+    "remote path": "https://github.com/slightlynybbled/dummy.git",
+    "local path": "C:/_code/_git_example",
     "branch": "master",
     "type": "git",
     "executable": "/usr/bin/git"
@@ -20,9 +19,7 @@
   },
 
   "application": {
-    "path": "",
-    "stop": "",
-    "start": ""
+    "start": "python -m dummy_app.py"
   },
 
   "scripts": {
