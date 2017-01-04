@@ -35,9 +35,38 @@ class AutoDeploy:
             if sys.platform == 'win32':
                 self.exec = 'C:/Program Files/Git/bin/git'
 
+        # if the local directory does not exist, then it must be cloned and checked out
+        if not os.path.exists(configuration['repository']['local path']):
+            logger.debug('path not found: {}'.format(configuration['repository']['local path']))
+            logger.debug('cloning repository')
+
+            remote_path = configuration['repository']['remote path']
+            local_path = configuration['repository']['local path']
+
+            script = '{} clone {} {}'.format(self.exec, remote_path, local_path)
+            self.run_script(script)
+
+            script = '{} checkout {}'.format(self.exec, self.get_branch(configuration))
+            self.run_script(script)
+        else:
+            logger.debug('path found: {}'.format(configuration['repository']['local path']))
+
         os.chdir(configuration['repository']['local path'])
 
-        # todo: if the local directory does not exist, then it must be cloned and checked out
+    def run_script(self, script):
+        """
+        Will run a single command-line script and return the output
+
+        :param script: a string containing the script to be executed
+        :return: the command-line output
+        """
+        parts = script.split()
+        p = subprocess.Popen(parts, stdout=subprocess.PIPE)
+
+        stdout = ''
+        for line in p.stdout:
+            stdout += line.decode('utf-8')
+        return stdout
 
     def get_branch(self, config=None):
         """
@@ -65,7 +94,7 @@ class AutoDeploy:
         local_branch = self.get_branch(configuration)
         remote_branch = configuration['repository']['remote'] + '/' + local_branch
 
-        script = '{} fetch origin {}'.format(self.exec, local_branch)
+        script = '{} fetch {} {}'.format(self.exec, configuration['repository']['remote'], local_branch)
         out = self.run_script(script)
         logger.debug('fetch output: {}'.format(out))
 
@@ -95,21 +124,6 @@ class AutoDeploy:
         else:
             logger.debug('no tests specified')
             return True
-
-    def run_script(self, script):
-        """
-        Will run a single command-line script and return the output
-
-        :param script: a string containing the script to be executed
-        :return: the command-line output
-        """
-        parts = script.split()
-        p = subprocess.Popen(parts, stdout=subprocess.PIPE)
-
-        stdout = ''
-        for line in p.stdout:
-            stdout += line.decode('utf-8')
-        return stdout
 
     def pre_pull_scripts(self, config=None):
         """
