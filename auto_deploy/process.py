@@ -53,7 +53,9 @@ class AutoDeploy:
             logger.debug('path found: {}'.format(configuration['repository']['local path']))
 
         os.chdir(configuration['repository']['local path'])
-        self.start_application(configuration)
+
+        if not self.is_new(configuration):
+            self.start_application(configuration)
 
     def run_script(self, script):
         """
@@ -123,6 +125,7 @@ class AutoDeploy:
 
         if 'test' in configuration.keys():
             raise NotImplementedError('')
+            # todo: add test check scripting
         else:
             logger.debug('no tests specified')
             return True
