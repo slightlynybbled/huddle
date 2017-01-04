@@ -8,7 +8,7 @@ import os
 logger = logging.getLogger(__name__)
 
 
-class AutoDeploy:
+class ApplicationManager:
     def __init__(self, config):
         """
 
