@@ -184,6 +184,11 @@ class AutoDeploy:
             pass
 
     def stop_application(self):
+        """
+        Stops the user application
+
+        :return:
+        """
         if self.app_ref:
             if sys.platform == 'win32':
                 script = 'Taskkill /PID {} /F'.format(self.app_ref.pid)
@@ -194,6 +199,12 @@ class AutoDeploy:
             self.app_ref = None
 
     def start_application(self, config=None):
+        """
+        Starts the user application
+
+        :param config: dictionary containing the configuration
+        :return:
+        """
         configuration = config if config else self.config
 
         if 'application' in configuration.keys():
