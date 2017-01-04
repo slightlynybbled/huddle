@@ -6,6 +6,13 @@ the git at specified intervals and - when there is an update - the server will p
 
 All of this is done using a configuration file, so no Python knowledge is required.
 
+The desired flow chart is as follows:
+
+![desired flow chart](flow-chart.png)
+
+This program, at initialization, should be all that is required to clone a remote repository, verify test status,
+sync changes, and stop/start/reboot the application.
+
 # Status
 
 This is a new project.  The configuration file format will likely change.  Everything will likely change.  Don't
