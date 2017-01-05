@@ -4,7 +4,7 @@ import json
 import threading
 import time
 
-from auto_deploy.manage import ApplicationManager
+from huddle.manage import ApplicationManager
 
 
 def main():

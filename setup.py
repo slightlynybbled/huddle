@@ -4,16 +4,16 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setup(
-    name='auto_deploy',
+    name='huddle',
 
     version='0.0.1dev0',
-    description='A server-oriented auto-deployment utility',
+    description='A server-oriented auto-deployment utility for any type of program or script',
     author='Jason Jones',
     author_email='slightlynybbled@gmail.com',
-    url='https://github.com/slightlynybbled/auto_deploy',
-    keywords=['auto-deployment'],
+    url='https://github.com/slightlynybbled/huddle',
+    keywords=['auto-deployment', 'huddle'],
     classifiers=[],
     install_requires=requirements,
     packages=find_packages(),
-    entry_points={'console_scripts': ['auto_deploy = auto_deploy.__main__:main']}
+    entry_points={'console_scripts': ['huddle = huddle.__main__:main']}
 )

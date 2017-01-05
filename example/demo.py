@@ -1,7 +1,7 @@
 import logging
 import json
 
-from auto_deploy.manage import ApplicationManager
+from huddle.manage import ApplicationManager
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
