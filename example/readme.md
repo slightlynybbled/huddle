@@ -13,15 +13,15 @@ Files must have the extension `.json`.
 
 ## Fields
 
-All valid fields can be found in `./auto_deploy/example/_sample_config.json`.  An example of a working script
-may be found in `./auto_deploy/example/demo_config.json`.
+All valid fields can be found in `./huddle/example/_sample_config.json`.  An example of a working script
+may be found in `./huddle/example/demo_config.json`.
 
 # Running
 
 Once installed, simply call the `auto_deploy` script from the command line using the appropriate configuration
 path:
 
-    auto_deploy --config "C:\example"
+    huddle --config "C:\example"
     
 All valid JSON configuration files that are contained within 'example' will each be managed on its own thread.
 

@@ -20,7 +20,8 @@ depend on this just yet.
 
 # Installation
 
-Install with `python setup.py install`.
+Install with `pip install huddle` or simply download the most recent version of this repository and
+`python setup.py install`.
 
 # Future
 
