@@ -1,0 +1,18 @@
+{
+  "repository": {
+    "remote": "origin",
+    "remote path": "https://github.com/slightlynybbled/dummy.git",
+    "local path": "/home/ubuntu/git_example",
+    "branch": "master",
+    "executable": "/usr/bin/git"
+  },
+
+  "timing": {
+    "minimum": 10,
+    "maximum": 20
+  },
+
+  "application": {
+    "start": "/home/ubuntu/py3env/bin/python -m dummy_app.py"
+  }
+}
