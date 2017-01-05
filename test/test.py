@@ -43,3 +43,8 @@ def app_manager(request):
 
 def test_create_app_manager(app_manager):
     assert True
+
+
+def test_create_load_and_validate(app_manager):
+    print('config ', app_manager.config)
+    assert app_manager.exec == ''
