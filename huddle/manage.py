@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class ApplicationManager:
-    def __init__(self, config):
+    def __init__(self, config, runner=True):
         """
 
         :param config: a dictionary containing the configuration
@@ -19,7 +19,9 @@ class ApplicationManager:
         self.app_ref = None
 
         self.load_and_validate()
-        self.run(self.config)
+
+        if runner:
+            self.run(self.config)
 
     def load_and_validate(self, config=None):
         """
