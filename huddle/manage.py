@@ -18,9 +18,8 @@ class ApplicationManager:
         self.exec = '/usr/bin/git'  # default executable (linux)
         self.app_ref = None
 
-        self.load_and_validate()
-
         if runner:
+            self.load_and_validate()
             self.run(self.config)
 
     def load_and_validate(self, config=None):
