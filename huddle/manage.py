@@ -48,6 +48,8 @@ class ApplicationManager:
             script = '{} clone {} {}'.format(self.exec, remote_path, local_path)
             self.run_script(script)
 
+            os.chdir(configuration['repository']['local path'])
+
             script = '{} checkout {}'.format(self.exec, self.get_branch(configuration))
             self.run_script(script)
         else:
