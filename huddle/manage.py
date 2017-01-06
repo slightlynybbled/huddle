@@ -75,6 +75,23 @@ class ApplicationManager:
             stdout += line.decode('utf-8')
         return stdout
 
+    def run_scripts(self, list_of_scripts):
+        """
+        Runs a series of scripts, returning the output of each as a list
+
+        :param list_of_scripts:  list of scripts
+        :return: list of outputs
+        """
+        outs = []
+        for script in list_of_scripts:
+            out = self.run_script(script)
+
+            logger.debug('script: {}'.format(script))
+            logger.debug('script output: {}'.format(out))
+            outs.append(out)
+
+        return outs
+
     def get_branch(self, config=None):
         """
         Returns the local branch from the configuration
@@ -143,18 +160,9 @@ class ApplicationManager:
         configuration = config if config else self.config
 
         try:
-            outs = []
-            for script in configuration['scripts']['pre-pull']:
-                out = self.run_script(script)
-
-                logger.debug('script: {}'.format(script))
-                logger.debug('script output: {}'.format(out))
-                outs.append(out)
-
+            return self.run_scripts(configuration['scripts']['pre-pull'])
         except KeyError:
-            outs = []
-
-        return outs
+            return []
 
     def pull(self, config=None):
         """
@@ -181,18 +189,9 @@ class ApplicationManager:
         configuration = config if config else self.config
 
         try:
-            outs = []
-            for script in configuration['scripts']['post-pull']:
-                out = self.run_script(script)
-
-                logger.debug('script: {}'.format(script))
-                logger.debug('script output: {}'.format(out))
-                outs.append(out)
-
+            return self.run_scripts(configuration['scripts']['post-pull'])
         except KeyError:
-            outs = []
-
-        return outs
+            return []
 
     def stop_application(self):
         """

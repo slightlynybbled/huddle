@@ -113,6 +113,7 @@ def test_pre_pull_scripts_empty(app_manager):
 
     assert outs == []
 
+
 def test_post_pull_scripts(app_manager):
     config = app_manager.config
     config['scripts'] = {
