@@ -61,16 +61,27 @@ prefixed with an underscore `_` will be ignored.
         /app1.json
         /app2.json
         /_app3.json
+        
+Or, in windows:
+
+    C:\config_files
+        \app1.json
+        \app2.json
+        \_app3.json
+        
+Note that `_app3.json` will be ignored.
 
 ## Running the Application
 
 To execute huddle, simply pass it the path to your configuration files using the `-c` or `--config` options:
 
     python -m huddle -c /home/ubuntu/config_files
+    python -m huddle -c C:\config_files
     
 Depending on the install location for huddle (virtual environments, etc.), the `python -m` may not be required:
 
     huddle -c /home/ubuntu/config_files
+    huddle -c C:\config_files
 
 # Status
 
