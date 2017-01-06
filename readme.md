@@ -1,4 +1,9 @@
-# Description
+# Huddle
+
+`Huddle` is an application that allows one or more programs to be started, monitored, stopped, updated, and 
+restarted from one or more configuration files.
+
+# Configuration
 
 The purpose of this program is to auto-deploy any arbitrary program in a fashion that is more suited to auto-scaling
 servers.  Instead of having a git hook that pushes to a known set of servers, a running server continually polls
@@ -6,7 +11,41 @@ the git at specified intervals and - when there is an update - the server will p
 
 All of this is done using a configuration file, so no Python knowledge is required.
 
-The desired flow chart is as follows:
+The simplest example of a configuration file will simply check for updates for a set of files every 60s:
+
+    {
+      "repository": {
+        "remote path": "https://github.com/slightlynybbled/dummy.git",
+        "local path": "/home/ubuntu/git_example",
+      },
+    }
+    
+A more comprehensive configuration file:
+
+    {
+      "repository": {
+        "remote": "origin",
+        "remote path": "https://github.com/slightlynybbled/dummy.git",
+        "local path": "/home/ubuntu/git_example",
+        "branch": "develop",
+        "executable": "/usr/bin/git"
+      },
+    
+      "timing": {
+        "minimum": 60,
+        "maximum": 600
+      },
+    
+      "application": {
+        "start": "/home/ubuntu/py3env/bin/python -m dummy_app.py"
+      }
+    }
+    
+This file will initially start the application using the command under `start`, and check for application updates
+every 60s to 600s (random).  When an update to the `develop` branch is detected, the application will be halted, the
+local file updated, and the application re-started automatically.
+
+The current flow chart for each application is:
 
 ![desired flow chart](flow-chart.png)
 
@@ -15,8 +54,9 @@ sync changes, and stop/start/reboot the application.
 
 # Status
 
-This is a new project.  The configuration file format will likely change.  Everything will likely change.  Don't
-depend on this just yet.
+The interface is stable enough to depend on.  Testing is at about 60% on unit tests and I have verified basic
+functionality on windows and on linux (Debian).  Currently, the 'check tests' portion of the API is not implemented
+and - if attempted - will raise a `NotImplementedError`.
 
 # Installation
 
