@@ -1,9 +1,9 @@
 # Huddle
 
 `Huddle` is an application that allows one or more programs to be started, monitored, stopped, updated, and 
-restarted from one or more configuration files.
+restarted from one or more configuration files.  This program works in Windows and Linux.
 
-# Configuration
+## Configuration File Format
 
 The purpose of this program is to auto-deploy any arbitrary program in a fashion that is more suited to auto-scaling
 servers.  Instead of having a git hook that pushes to a known set of servers, a running server continually polls
@@ -51,6 +51,26 @@ The current flow chart for each application is:
 
 This program, at initialization, should be all that is required to clone a remote repository, verify test status,
 sync changes, and stop/start/reboot the application.
+
+## Configuration Files
+
+All configuration files should be saved within a particular directory with `.json` extensions.  Any file that is
+prefixed with an underscore `_` will be ignored.
+
+    /home/ubuntu/config_files
+        /app1.json
+        /app2.json
+        /_app3.json
+
+## Running the Application
+
+To execute huddle, simply pass it the path to your configuration files using the `-c` or `--config` options:
+
+    python -m huddle -c /home/ubuntu/config_files
+    
+Depending on the install location for huddle (virtual environments, etc.), the `python -m` may not be required:
+
+    huddle -c /home/ubuntu/config_files
 
 # Status
 
