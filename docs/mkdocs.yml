@@ -2,7 +2,7 @@ site_name: Huddle
 
 pages:
     - Home: index.md
-    - Installation: install.md
+    - Getting Started: gettingstarted.md
     - Config File Format: configfiles.md
     - Running: running.md
 

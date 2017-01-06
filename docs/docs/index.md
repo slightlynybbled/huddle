@@ -1,17 +1,9 @@
-# Welcome to MkDocs
+# Huddle
 
-For full documentation visit [mkdocs.org](http://mkdocs.org).
+Huddle is an auto-deployment file and application management tool designed to work well in 
+auto-scaling environments in which the end number of servers or clients is unknown.
 
-## Commands
+Applications are controlled through huddle using [configuration files](configfiles.md)
+which are written in `.json` format.  Each file or application to be controlled will
+have its own configuration file, which may be as simple or as complex as the user wishes.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
