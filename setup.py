@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='huddle',
-    version='0.0.1dev1',
+    version='0.1.0',
     description='A server-oriented auto-deployment utility for any type of program or script',
     author='Jason Jones',
     author_email='slightlynybbled@gmail.com',
