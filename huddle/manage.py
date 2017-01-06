@@ -143,14 +143,18 @@ class ApplicationManager:
         configuration = config if config else self.config
 
         try:
+            outs = []
             for script in configuration['scripts']['pre-pull']:
                 out = self.run_script(script)
 
                 logger.debug('script: {}'.format(script))
                 logger.debug('script output: {}'.format(out))
+                outs.append(out)
 
         except KeyError:
-            pass
+            outs = []
+
+        return outs
 
     def pull(self, config=None):
         """
@@ -177,14 +181,18 @@ class ApplicationManager:
         configuration = config if config else self.config
 
         try:
+            outs = []
             for script in configuration['scripts']['post-pull']:
                 out = self.run_script(script)
 
                 logger.debug('script: {}'.format(script))
                 logger.debug('script output: {}'.format(out))
+                outs.append(out)
 
         except KeyError:
-            pass
+            outs = []
+
+        return outs
 
     def stop_application(self):
         """
