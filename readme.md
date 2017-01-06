@@ -94,7 +94,3 @@ and - if attempted - will raise a `NotImplementedError`.
 Install with `pip install huddle` or simply download the most recent version of this repository and
 `python setup.py install`.
 
-# Future
-
-In the future, it is planned that this project will be able to clone, test, run, stop and basically manage a number
-of programs given a simple configuration file.
