@@ -47,7 +47,7 @@ local file updated, and the application re-started automatically.
 
 The current flow chart for each application is:
 
-![desired flow chart](flow-chart.png)
+![flow chart](flow-chart.png)
 
 This program, at initialization, should be all that is required to clone a remote repository, verify test status,
 sync changes, and stop/start/reboot the application.
