@@ -19,7 +19,7 @@
   },
 
   "application": {
-    "start": "python -m dummy_app.py"
+    "executable": "python -m dummy_app.py"
   },
 
   "scripts": {
