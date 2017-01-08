@@ -3,6 +3,8 @@
 `Huddle` is an application that allows one or more programs to be started, monitored, stopped, updated, and 
 restarted from one or more configuration files.  This program works in Windows and Linux.
 
+More complete documentation may be found on [GitHub Pages](https://slightlynybbled.github.io/huddle/).
+
 ## Configuration File Format
 
 The purpose of this program is to auto-deploy any arbitrary program in a fashion that is more suited to auto-scaling
