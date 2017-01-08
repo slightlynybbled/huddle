@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Config File Format - Huddle</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Config File Format";
+    var mkdocs_page_input_path = "configfiles.md";
+    var mkdocs_page_url = "/configfiles/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Huddle</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../gettingstarted/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Config File Format</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#settings">Settings</a></li>
+                
+                    <li><a class="toctree-l4" href="#repository">Repository</a></li>
+                
+                    <li><a class="toctree-l4" href="#testing">Testing</a></li>
+                
+                    <li><a class="toctree-l4" href="#timing">Timing</a></li>
+                
+                    <li><a class="toctree-l4" href="#application">Application</a></li>
+                
+                    <li><a class="toctree-l4" href="#scripts">Scripts</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#example-configuration-scripts">Example Configuration Scripts</a></li>
+                
+                    <li><a class="toctree-l4" href="#minimal-file-sync">Minimal File Sync</a></li>
+                
+                    <li><a class="toctree-l4" href="#syncingrun-an-application">Syncing/Run an Application</a></li>
+                
+                    <li><a class="toctree-l4" href="#sync-applicationreboot-server">Sync Application/Reboot Server</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../server/">Server</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Huddle</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Config File Format</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="settings">Settings</h1>
+<p>All settings for a particular configuration are encapsulated into a single JSON object
+which consists of key-value pairs.  Each section below will consist of an object that
+contains the keys and information required to properly configure each key.</p>
+<h2 id="repository">Repository</h2>
+<p>The <code>repository</code> key contains all remote/local relationship data, including paths to the
+executable.  This is the most important field and the only one that is actually required.</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>description</th>
+<th>valid values</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>remote</code></td>
+<td>the name of the remote</td>
+<td>any string</td>
+<td>"origin"</td>
+</tr>
+<tr>
+<td><code>remote path</code></td>
+<td>the remote url or path</td>
+<td>any string</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>local path</code></td>
+<td>the local path</td>
+<td>any string</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>branch</code></td>
+<td>the git branch to sync</td>
+<td>any string</td>
+<td>"master"</td>
+</tr>
+<tr>
+<td><code>executable</code></td>
+<td>the executable</td>
+<td>string/path</td>
+<td>"/usr/bin/git" or "C:\Program Files\Git\bin\git.exe"</td>
+</tr>
+</tbody>
+</table>
+<p>Example of <code>repository</code> object:</p>
+<pre><code>{
+    "repository": {
+        "remote": "origin",
+        "remote path": "https://github.com/slightlynybbled/dummy.git",
+        "local path": "C:/_code/_git_example",
+        "branch": "master",
+        "type": "git",
+        "executable": "/usr/bin/git"
+    }
+}
+</code></pre>
+<h2 id="testing">Testing</h2>
+<p>The <code>test</code> key is reserved, but not currently implemented.</p>
+<h2 id="timing">Timing</h2>
+<p>If no timing is specified, then the default will be 60 seconds.  If only a <code>minimum</code> is
+specified, then the remote will be checked at that interval.  Finally, if a <code>minimum</code>
+and a <code>maximum</code> are specified, then the remote will be checked for updates at a random
+time between the <code>minimum</code> and <code>maximum</code> values.</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>description</th>
+<th>valid values</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minimum</code></td>
+<td>minimum time in seconds</td>
+<td>any integer</td>
+<td>60</td>
+</tr>
+<tr>
+<td><code>maximum</code></td>
+<td>maximum time in seconds</td>
+<td>any string</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>Example of <code>timing</code> object:</p>
+<pre><code>"timing": {
+    "minimum": 30,
+    "maximum": 300
+},
+</code></pre>
+<h2 id="application">Application</h2>
+<p>The <code>application</code> key is used to identify the application that is to be started and 
+monitored.  On remote update, this is the application that will be stopped, updated,
+and reloaded.</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>description</th>
+<th>valid values</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>start</code></td>
+<td>the start executable</td>
+<td>any integer</td>
+<td>60</td>
+</tr>
+</tbody>
+</table>
+<p>Example of <code>application</code> object:</p>
+<pre><code>"application": {
+    "start": "python -m dummy_app.py"
+},
+</code></pre>
+<h2 id="scripts">Scripts</h2>
+<p>There are two times at which an arbitrary script or group of <code>scripts</code> must be executed
+and that is <code>pre-pull</code> and <code>post-pull</code>.  The <code>pre-pull</code> scripts are supplied as a JSON 
+array, with each being executed in succession.</p>
+<p>This <code>scripts</code> will execute two scripts before the pull and will reboot the machine
+after the pull</p>
+<pre><code>"scripts": {
+    "pre-pull": [
+        "/bin/ls /home/ubuntu/ &gt; /home/ubuntu/values.txt", 
+        "/bin/ls /etc/ &gt; /home/ubuntu/values.txt"
+    ],
+    "post-pull": ["sudo reboot"]
+}
+</code></pre>
+<h1 id="example-configuration-scripts">Example Configuration Scripts</h1>
+<h2 id="minimal-file-sync">Minimal File Sync</h2>
+<p>This configuration will keep the local <code>C:/_code/_git_example</code> directory in synce with the 
+remote <code>develop</code> branch.  It will not start or run any applications.</p>
+<pre><code>{
+    "repository": {
+        "remote": "origin",
+        "remote path": "https://github.com/slightlynybbled/dummy.git",
+        "local path": "C:/_code/_git_example",
+        "branch": "develop",
+        "executable": "C:/Program Files/Git/bin/git"
+    }
+}
+</code></pre>
+<h2 id="syncingrun-an-application">Syncing/Run an Application</h2>
+<p>This configuration will sync every 60s to 600s.  When there is an update, this application 
+will be halted, updated, then restarted after the update.</p>
+<pre><code>{
+    "repository": {
+        "remote": "origin",
+        "remote path": "https://github.com/slightlynybbled/dummy.git",
+        "local path": "C:/_code/_git_example",
+        "branch": "master",
+        "executable": "C:/Program Files/Git/bin/git"
+    },
+
+    "timing": {
+        "minimum": 60,
+        "maximum": 600
+    },
+
+    "application": {
+        "start": "python -m dummy_app.py"
+    }
+}
+</code></pre>
+<h2 id="sync-applicationreboot-server">Sync Application/Reboot Server</h2>
+<p>This configuration will check the remote every 60s and, when new data is available, huddle
+will stop the application and reboot the machine with a <code>post-pull</code> script.</p>
+<pre><code>{
+    "repository": {
+        "remote": "origin",
+        "remote path": "https://github.com/slightlynybbled/dummy.git",
+        "local path": "C:/_code/_git_example",
+        "executable": "/usr/bin/git"
+    },
+
+    "application": {
+        "start": "python -m dummy_app.py"
+    },
+
+    "scripts": {
+        "post-pull": ["/sbin/reboot"]
+    }
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../server/" class="btn btn-neutral float-right" title="Server">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../gettingstarted/" class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../gettingstarted/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../server/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

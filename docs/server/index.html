@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Server - Huddle</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Server";
+    var mkdocs_page_input_path = "server.md";
+    var mkdocs_page_url = "/server/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Huddle</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../gettingstarted/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../configfiles/">Config File Format</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Server</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#running-in-a-virtual-environment">Running in a Virtual Environment</a></li>
+                
+                    <li><a class="toctree-l4" href="#running-at-startup-linux">Running at Startup (Linux)</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Huddle</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Server</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="running-in-a-virtual-environment">Running in a Virtual Environment</h1>
+<p>The below assumes ubuntu linux, but applies equally as well to other distributions
+and to windows.</p>
+<p>First, the user must create the virtual environment:</p>
+<pre><code>ubuntu ~\$ virtualenv -p python3 /home/ubuntu/py3env
+</code></pre>
+<p>Install Huddle into the environment:</p>
+<pre><code>ubuntu ~\$ /home/ubuntu/py3env/bin/pip install huddle
+</code></pre>
+<p>Create a location for your configuration files:</p>
+<pre><code>mkdir /home/ubuntu/huddle_config
+</code></pre>
+<p>Place all JSON configuration files into the configuration directory, then start huddle:</p>
+<pre><code>/home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config
+</code></pre>
+<p>Huddle will then start your applications!</p>
+<h2 id="running-at-startup-linux">Running at Startup (Linux)</h2>
+<p>The most straightforward method of starting Huddle at startup is to use cron jobs.</p>
+<pre><code>crontab -e
+</code></pre>
+<p>Or, if your application requires root permissions:</p>
+<pre><code>sudo crontab -u root -e
+</code></pre>
+<p>This will open a text editor that allows you to enter applications to execute at certain
+times.  One of these times is at reboot.  Enter the following line at the bottom of the 
+file:</p>
+<pre><code>@reboot /home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config
+</code></pre>
+<p>Now, Huddle will start and run the configuration files at reboot!</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../configfiles/" class="btn btn-neutral" title="Config File Format"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../configfiles/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>
