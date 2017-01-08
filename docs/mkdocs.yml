@@ -4,6 +4,6 @@ pages:
     - Home: index.md
     - Getting Started: gettingstarted.md
     - Config File Format: configfiles.md
-    - Running: running.md
+    - Server: server.md
 
 theme: readthedocs

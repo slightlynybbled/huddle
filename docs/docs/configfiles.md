@@ -142,7 +142,7 @@ will stop the application and reboot the machine with a `post-pull` script.
 
         "application": {
             "start": "python -m dummy_app.py"
-        }
+        },
 
         "scripts": {
             "post-pull": ["/sbin/reboot"]
