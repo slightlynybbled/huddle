@@ -1,5 +1,11 @@
 # Installation
 
+## Requirements
+
+In order to properly run Huddle, Git must be installed on the operating system.
+
+## Install
+
 Huddle may be installed using pip:
 
     pip install huddle 
