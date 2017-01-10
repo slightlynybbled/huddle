@@ -38,7 +38,7 @@ This configuration file would simply ensure that the local path files are always
 sync with the remote path files, which are located on the shown git repository.  Huddle 
 will automatically sync the `local path` with the `remote path` repository.
 
-See [config file format](configfileformat.md) for more details regarding configuration
+See [config file format](configfiles.md) for more details regarding configuration
 file settings and for examples.
 
 ## Location
