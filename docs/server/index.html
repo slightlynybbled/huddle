@@ -78,7 +78,21 @@
                     <li><a class="toctree-l4" href="#running-at-startup-linux">Running at Startup (Linux)</a></li>
                 
             
+                <li class="toctree-l3"><a href="#server-considerations">Server Considerations</a></li>
+                
+                    <li><a class="toctree-l4" href="#git-executable">Git Executable</a></li>
+                
+                    <li><a class="toctree-l4" href="#authentication">Authentication</a></li>
+                
+            
             </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../commandline/">Command-Line Options</a>
         
     </li>
 <li>
@@ -144,12 +158,28 @@ file:</p>
 <pre><code>@reboot /home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config
 </code></pre>
 <p>Now, Huddle will start and run the configuration files at reboot!</p>
+<h1 id="server-considerations">Server Considerations</h1>
+<h2 id="git-executable">Git Executable</h2>
+<p>Huddle, by default, uses the Git executable already installed on the user's machine
+in order to manipulate the Git repository.  In Windows, the default executable is
+in <code>C:/Program Files/Git/bin/git</code>.  In Linux, the default executable is in <code>\usr\bin\git</code>.
+It is recommended that the <a href="../configfiles/#Repository"><code>executable</code></a> configuration file
+be used to specify the executable location. </p>
+<h2 id="authentication">Authentication</h2>
+<p>When working with remote repositories, you must have the server set up so that you can
+simply <code>git clone origin master</code> on the command line without having to enter a password.
+This usually involves creating private and public keys on the pulling server and uploading
+the public key to the repository server, although other methods are available.</p>
+<p>In auto-scaling environments, it is recommended to generate this key on the base image
+so that all of the auto-generated machines have access to the key.</p>
               
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../commandline/" class="btn btn-neutral float-right" title="Command-Line Options">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../configfiles/" class="btn btn-neutral" title="Config File Format"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -180,6 +210,8 @@ file:</p>
       
         <span><a href="../configfiles/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../commandline/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

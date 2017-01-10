@@ -12,13 +12,23 @@
         },
         {
             "location": "/gettingstarted/",
-            "text": "Installation\n\n\nHuddle may be installed using pip:\n\n\npip install huddle\n\n\n\nThis will work for most users in most environments.\n\n\nThe most recent revision may also be downloaded from the \n\ngithub repository\n and installed using \n\n\npython setup.py install\n\n\n\nConfiguration\n\n\nFormat\n\n\nHuddle depends on configuration files to perform mosts tasks.  Configuration files are\nin \n.json\n format.  Each file or application to be managed will have one corresponding\nconfiguration file.\n\n\nA simple example of a configuration file would be:\n\n\n{\n    \"repository\": {\n        \"remote path\": \"https://github.com/slightlynybbled/dummy.git\",\n        \"local path\": \"/home/ubuntu/git_example\"\n    },\n}\n\n\n\nThis configuration file would simply ensure that the local path files are always in\nsync with the remote path files, which are located on the shown git repository.  Huddle \nwill automatically sync the \nlocal path\n with the \nremote path\n repository.\n\n\nSee \nconfig file format\n for more details regarding configuration\nfile settings and for examples.\n\n\nLocation\n\n\nAll config files should reside in the same directory and have an extension of \n.json\n.\nAny file prefixed with an underscore \n_\n will be ignored by huddle.\n\n\n- /home/ubuntu/config_files\n  - /fileset0_config.json \n  - /app0_config.json \n  - /app1_config.json \n  - /_app2_config.json\n\n\n\nThe above file structure would work.  Note that the file structure is flat.  No files are\nto be located in a subdirectory or they will not be parsed.  Note that the\n\n_app2_config.json\n file would be ignored since it has a leading underscore \n_\n.\n\n\nFiles may be located anywhere on the file system to which huddle has access.\n\n\nStarting Huddle\n\n\nOnce installed, huddle may be started by simply \n\n\nhuddle -c <config directory>\n\n\n\nHuddle will automatically manage each file or application according to its configuration.\nSome systems or installs may require the \npython -m\n prefix:\n\n\npython -m huddle -c <config directory>\n\n\n\nTo run the configuration structure shown above, one would execute:\n\n\nhuddle -c /home/ubuntu/config_files",
+            "text": "Installation\n\n\nRequirements\n\n\nIn order to properly run Huddle, Git must be installed on the operating system.\n\n\nInstall\n\n\nHuddle may be installed using pip:\n\n\npip install huddle\n\n\n\nThis will work for most users in most environments.\n\n\nThe most recent revision may also be downloaded from the \n\ngithub repository\n and installed using \n\n\npython setup.py install\n\n\n\nConfiguration\n\n\nFormat\n\n\nHuddle depends on configuration files to perform mosts tasks.  Configuration files are\nin \n.json\n format.  Each file or application to be managed will have one corresponding\nconfiguration file.\n\n\nA simple example of a configuration file would be:\n\n\n{\n    \"repository\": {\n        \"remote path\": \"https://github.com/slightlynybbled/dummy.git\",\n        \"local path\": \"/home/ubuntu/git_example\"\n    },\n}\n\n\n\nThis configuration file would simply ensure that the local path files are always in\nsync with the remote path files, which are located on the shown git repository.  Huddle \nwill automatically sync the \nlocal path\n with the \nremote path\n repository.\n\n\nSee \nconfig file format\n for more details regarding configuration\nfile settings and for examples.\n\n\nLocation\n\n\nAll config files should reside in the same directory and have an extension of \n.json\n.\nAny file prefixed with an underscore \n_\n will be ignored by huddle.\n\n\n- /home/ubuntu/config_files\n  - /fileset0_config.json \n  - /app0_config.json \n  - /app1_config.json \n  - /_app2_config.json\n\n\n\nThe above file structure would work.  Note that the file structure is flat.  No files are\nto be located in a subdirectory or they will not be parsed.  Note that the\n\n_app2_config.json\n file would be ignored since it has a leading underscore \n_\n.\n\n\nFiles may be located anywhere on the file system to which huddle has access.\n\n\nStarting Huddle\n\n\nOnce installed, huddle may be started by simply \n\n\nhuddle -c <config directory>\n\n\n\nHuddle will automatically manage each file or application according to its configuration.\nSome systems or installs may require the \npython -m\n prefix:\n\n\npython -m huddle -c <config directory>\n\n\n\nTo run the configuration structure shown above, one would execute:\n\n\nhuddle -c /home/ubuntu/config_files",
             "title": "Getting Started"
         },
         {
             "location": "/gettingstarted/#installation",
-            "text": "Huddle may be installed using pip:  pip install huddle  This will work for most users in most environments.  The most recent revision may also be downloaded from the  github repository  and installed using   python setup.py install",
+            "text": "",
             "title": "Installation"
+        },
+        {
+            "location": "/gettingstarted/#requirements",
+            "text": "In order to properly run Huddle, Git must be installed on the operating system.",
+            "title": "Requirements"
+        },
+        {
+            "location": "/gettingstarted/#install",
+            "text": "Huddle may be installed using pip:  pip install huddle  This will work for most users in most environments.  The most recent revision may also be downloaded from the  github repository  and installed using   python setup.py install",
+            "title": "Install"
         },
         {
             "location": "/gettingstarted/#configuration",
@@ -97,7 +107,7 @@
         },
         {
             "location": "/server/",
-            "text": "Running in a Virtual Environment\n\n\nThe below assumes ubuntu linux, but applies equally as well to other distributions\nand to windows.\n\n\nFirst, the user must create the virtual environment:\n\n\nubuntu ~\\$ virtualenv -p python3 /home/ubuntu/py3env\n\n\n\nInstall Huddle into the environment:\n\n\nubuntu ~\\$ /home/ubuntu/py3env/bin/pip install huddle\n\n\n\nCreate a location for your configuration files:\n\n\nmkdir /home/ubuntu/huddle_config\n\n\n\nPlace all JSON configuration files into the configuration directory, then start huddle:\n\n\n/home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config\n\n\n\nHuddle will then start your applications!\n\n\nRunning at Startup (Linux)\n\n\nThe most straightforward method of starting Huddle at startup is to use cron jobs.\n\n\ncrontab -e\n\n\n\nOr, if your application requires root permissions:\n\n\nsudo crontab -u root -e\n\n\n\nThis will open a text editor that allows you to enter applications to execute at certain\ntimes.  One of these times is at reboot.  Enter the following line at the bottom of the \nfile:\n\n\n@reboot /home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config\n\n\n\nNow, Huddle will start and run the configuration files at reboot!",
+            "text": "Running in a Virtual Environment\n\n\nThe below assumes ubuntu linux, but applies equally as well to other distributions\nand to windows.\n\n\nFirst, the user must create the virtual environment:\n\n\nubuntu ~\\$ virtualenv -p python3 /home/ubuntu/py3env\n\n\n\nInstall Huddle into the environment:\n\n\nubuntu ~\\$ /home/ubuntu/py3env/bin/pip install huddle\n\n\n\nCreate a location for your configuration files:\n\n\nmkdir /home/ubuntu/huddle_config\n\n\n\nPlace all JSON configuration files into the configuration directory, then start huddle:\n\n\n/home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config\n\n\n\nHuddle will then start your applications!\n\n\nRunning at Startup (Linux)\n\n\nThe most straightforward method of starting Huddle at startup is to use cron jobs.\n\n\ncrontab -e\n\n\n\nOr, if your application requires root permissions:\n\n\nsudo crontab -u root -e\n\n\n\nThis will open a text editor that allows you to enter applications to execute at certain\ntimes.  One of these times is at reboot.  Enter the following line at the bottom of the \nfile:\n\n\n@reboot /home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config\n\n\n\nNow, Huddle will start and run the configuration files at reboot!\n\n\nServer Considerations\n\n\nGit Executable\n\n\nHuddle, by default, uses the Git executable already installed on the user's machine\nin order to manipulate the Git repository.  In Windows, the default executable is\nin \nC:/Program Files/Git/bin/git\n.  In Linux, the default executable is in \n\\usr\\bin\\git\n.\nIt is recommended that the \nexecutable\n configuration file\nbe used to specify the executable location. \n\n\nAuthentication\n\n\nWhen working with remote repositories, you must have the server set up so that you can\nsimply \ngit clone origin master\n on the command line without having to enter a password.\nThis usually involves creating private and public keys on the pulling server and uploading\nthe public key to the repository server, although other methods are available.\n\n\nIn auto-scaling environments, it is recommended to generate this key on the base image\nso that all of the auto-generated machines have access to the key.",
             "title": "Server"
         },
         {
@@ -109,6 +119,31 @@
             "location": "/server/#running-at-startup-linux",
             "text": "The most straightforward method of starting Huddle at startup is to use cron jobs.  crontab -e  Or, if your application requires root permissions:  sudo crontab -u root -e  This will open a text editor that allows you to enter applications to execute at certain\ntimes.  One of these times is at reboot.  Enter the following line at the bottom of the \nfile:  @reboot /home/ubuntu/py3env/bin/huddle -c /home/ubuntu/huddle_config  Now, Huddle will start and run the configuration files at reboot!",
             "title": "Running at Startup (Linux)"
+        },
+        {
+            "location": "/server/#server-considerations",
+            "text": "",
+            "title": "Server Considerations"
+        },
+        {
+            "location": "/server/#git-executable",
+            "text": "Huddle, by default, uses the Git executable already installed on the user's machine\nin order to manipulate the Git repository.  In Windows, the default executable is\nin  C:/Program Files/Git/bin/git .  In Linux, the default executable is in  \\usr\\bin\\git .\nIt is recommended that the  executable  configuration file\nbe used to specify the executable location.",
+            "title": "Git Executable"
+        },
+        {
+            "location": "/server/#authentication",
+            "text": "When working with remote repositories, you must have the server set up so that you can\nsimply  git clone origin master  on the command line without having to enter a password.\nThis usually involves creating private and public keys on the pulling server and uploading\nthe public key to the repository server, although other methods are available.  In auto-scaling environments, it is recommended to generate this key on the base image\nso that all of the auto-generated machines have access to the key.",
+            "title": "Authentication"
+        },
+        {
+            "location": "/commandline/",
+            "text": "Command-Line Options\n\n\nGenerally, the application may be executed by simply typing\n\n\nhuddle -c <config file path>\n\n\n\nIn some applications, it may be necessary to specify a command-line option in order to modify\nthe behavior of the executable.\n\n\n\n\n\n\n\n\ncommand line\n\n\nparameter\n\n\ndescription\n\n\n\n\n\n\n\n\n\n\n-d\n, \n--debug\n\n\nnone\n\n\ndetailed output on the command line\n\n\n\n\n\n\n-c\n, \n--config\n\n\npath\n\n\npath to the directory containing all configuration files",
+            "title": "Command-Line Options"
+        },
+        {
+            "location": "/commandline/#command-line-options",
+            "text": "Generally, the application may be executed by simply typing  huddle -c <config file path>  In some applications, it may be necessary to specify a command-line option in order to modify\nthe behavior of the executable.     command line  parameter  description      -d ,  --debug  none  detailed output on the command line    -c ,  --config  path  path to the directory containing all configuration files",
+            "title": "Command-Line Options"
         }
     ]
 }

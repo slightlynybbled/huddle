@@ -61,6 +61,10 @@
             
                 <li class="toctree-l3"><a href="#installation">Installation</a></li>
                 
+                    <li><a class="toctree-l4" href="#requirements">Requirements</a></li>
+                
+                    <li><a class="toctree-l4" href="#install">Install</a></li>
+                
             
                 <li class="toctree-l3"><a href="#configuration">Configuration</a></li>
                 
@@ -87,6 +91,13 @@
             <li>
     <li class="toctree-l1 ">
         <a class="" href="../server/">Server</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../commandline/">Command-Line Options</a>
         
     </li>
 <li>
@@ -124,6 +135,9 @@
             <div class="section">
               
                 <h1 id="installation">Installation</h1>
+<h2 id="requirements">Requirements</h2>
+<p>In order to properly run Huddle, Git must be installed on the operating system.</p>
+<h2 id="install">Install</h2>
 <p>Huddle may be installed using pip:</p>
 <pre><code>pip install huddle
 </code></pre>
@@ -148,7 +162,7 @@ configuration file.</p>
 <p>This configuration file would simply ensure that the local path files are always in
 sync with the remote path files, which are located on the shown git repository.  Huddle 
 will automatically sync the <code>local path</code> with the <code>remote path</code> repository.</p>
-<p>See <a href="configfileformat.md">config file format</a> for more details regarding configuration
+<p>See <a href="../configfiles/">config file format</a> for more details regarding configuration
 file settings and for examples.</p>
 <h2 id="location">Location</h2>
 <p>All config files should reside in the same directory and have an extension of <code>.json</code>.
