@@ -1,3 +1,5 @@
+<img src="/img/huddle.png" style="float: right; margin-left: 10px;">
+
 # Huddle
 
 Huddle is an auto-deployment file and application management tool designed to work well in 

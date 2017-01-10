@@ -8,8 +8,8 @@ Only standard library is utilized currently, no external packages required.
     
 # Configuration
 
-Multiple JSON files may be stored in a directory.  Any files prefixed with an underscore `_` will be ignored.
-Files must have the extension `.json`.
+Multiple JSON/INI files may be stored in a directory.  Any files prefixed with an underscore `_` will be ignored.
+Files must have the extension `.json` or `.ini`.
 
 ## Fields
 
