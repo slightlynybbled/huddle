@@ -17,7 +17,7 @@ executable.  This is the most important field and the only one that is actually 
 | `branch`      | the git branch to sync | any string     | "master"      |
 | `executable`  | the executable         | string/path | "/usr/bin/git" or "C:\Program Files\Git\bin\git.exe" |
 
-Example of `repository` object:
+Example of `repository` object (JSON):
 
     {
         "repository": {
@@ -29,6 +29,16 @@ Example of `repository` object:
             "executable": "/usr/bin/git"
         }
     }
+    
+The equivalent INI:
+
+    [repository]
+    remote = origin
+    remote path = https://github.com/slightlynybbled/dummy.git
+    local path = C:/_code/_git_example
+    branch = master
+    type = git
+    executable = /usr/bin/git
 
 ## Testing
 
@@ -46,12 +56,18 @@ time between the `minimum` and `maximum` values.
 | `minimum`     | minimum time in seconds | any integer    | 60            |
 | `maximum`     | maximum time in seconds | any string     | -             |
 
-Example of `timing` object:
+Example of `timing` object (JSON):
 
     "timing": {
         "minimum": 30,
         "maximum": 300
     },
+
+The equivalent INI:
+
+    [timing]
+    minimum = 30
+    maximum = 300
 
 ## Application 
 
@@ -63,11 +79,16 @@ and reloaded.
 |---------------|-------------------------|----------------|---------------|
 | `start`       | the start executable    | any integer    | 60            |
 
-Example of `application` object:
+Example of `application` object (JSON):
 
     "application": {
         "start": "python -m dummy_app.py"
     },
+    
+The equivalent INI:
+
+    [application]
+    start = python -m dummy_app.py
 
 ## Scripts
 
@@ -76,7 +97,7 @@ and that is `pre-pull` and `post-pull`.  The `pre-pull` scripts are supplied as 
 array, with each being executed in succession.
 
 This `scripts` will execute two scripts before the pull and will reboot the machine
-after the pull
+after the pull:
 
     "scripts": {
         "pre-pull": [
@@ -85,6 +106,14 @@ after the pull
         ],
         "post-pull": ["sudo reboot"]
     }
+    
+The equivalent INI:
+
+    [scripts]
+    pre-pull = /bin/ls /home/ubuntu/ > /home/ubuntu/values.txt, /bin/ls /etc/ > /home/ubuntu/values.txt
+    post-pull = sudo reboot
+    
+Note that in the INI file, each command is separated by a comma `,`.
 
 # Example Configuration Scripts
 

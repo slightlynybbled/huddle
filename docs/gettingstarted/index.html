@@ -151,13 +151,18 @@
 <p>Huddle depends on configuration files to perform mosts tasks.  Configuration files are
 in <code>.json</code> format.  Each file or application to be managed will have one corresponding
 configuration file.</p>
-<p>A simple example of a configuration file would be:</p>
+<p>A simple example of a JSON configuration file would be:</p>
 <pre><code>{
     "repository": {
         "remote path": "https://github.com/slightlynybbled/dummy.git",
         "local path": "/home/ubuntu/git_example"
     },
 }
+</code></pre>
+<p>or, if you prefer INI:</p>
+<pre><code>[repository]
+remote path = https://github.com/slightlynybbled/dummy.git
+local path = /home/ubuntu/git_example
 </code></pre>
 <p>This configuration file would simply ensure that the local path files are always in
 sync with the remote path files, which are located on the shown git repository.  Huddle 
@@ -170,7 +175,7 @@ Any file prefixed with an underscore <code>_</code> will be ignored by huddle.</
 <pre><code>- /home/ubuntu/config_files
   - /fileset0_config.json 
   - /app0_config.json 
-  - /app1_config.json 
+  - /app1_config.ini 
   - /_app2_config.json
 </code></pre>
 <p>The above file structure would work.  Note that the file structure is flat.  No files are

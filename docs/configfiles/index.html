@@ -188,7 +188,7 @@ executable.  This is the most important field and the only one that is actually 
 </tr>
 </tbody>
 </table>
-<p>Example of <code>repository</code> object:</p>
+<p>Example of <code>repository</code> object (JSON):</p>
 <pre><code>{
     "repository": {
         "remote": "origin",
@@ -199,6 +199,15 @@ executable.  This is the most important field and the only one that is actually 
         "executable": "/usr/bin/git"
     }
 }
+</code></pre>
+<p>The equivalent INI:</p>
+<pre><code>[repository]
+remote = origin
+remote path = https://github.com/slightlynybbled/dummy.git
+local path = C:/_code/_git_example
+branch = master
+type = git
+executable = /usr/bin/git
 </code></pre>
 <h2 id="testing">Testing</h2>
 <p>The <code>test</code> key is reserved, but not currently implemented.</p>
@@ -231,11 +240,16 @@ time between the <code>minimum</code> and <code>maximum</code> values.</p>
 </tr>
 </tbody>
 </table>
-<p>Example of <code>timing</code> object:</p>
+<p>Example of <code>timing</code> object (JSON):</p>
 <pre><code>"timing": {
     "minimum": 30,
     "maximum": 300
 },
+</code></pre>
+<p>The equivalent INI:</p>
+<pre><code>[timing]
+minimum = 30
+maximum = 300
 </code></pre>
 <h2 id="application">Application</h2>
 <p>The <code>application</code> key is used to identify the application that is to be started and 
@@ -259,17 +273,21 @@ and reloaded.</p>
 </tr>
 </tbody>
 </table>
-<p>Example of <code>application</code> object:</p>
+<p>Example of <code>application</code> object (JSON):</p>
 <pre><code>"application": {
     "start": "python -m dummy_app.py"
 },
+</code></pre>
+<p>The equivalent INI:</p>
+<pre><code>[application]
+start = python -m dummy_app.py
 </code></pre>
 <h2 id="scripts">Scripts</h2>
 <p>There are two times at which an arbitrary script or group of <code>scripts</code> must be executed
 and that is <code>pre-pull</code> and <code>post-pull</code>.  The <code>pre-pull</code> scripts are supplied as a JSON 
 array, with each being executed in succession.</p>
 <p>This <code>scripts</code> will execute two scripts before the pull and will reboot the machine
-after the pull</p>
+after the pull:</p>
 <pre><code>"scripts": {
     "pre-pull": [
         "/bin/ls /home/ubuntu/ &gt; /home/ubuntu/values.txt", 
@@ -278,6 +296,12 @@ after the pull</p>
     "post-pull": ["sudo reboot"]
 }
 </code></pre>
+<p>The equivalent INI:</p>
+<pre><code>[scripts]
+pre-pull = /bin/ls /home/ubuntu/ &gt; /home/ubuntu/values.txt, /bin/ls /etc/ &gt; /home/ubuntu/values.txt
+post-pull = sudo reboot
+</code></pre>
+<p>Note that in the INI file, each command is separated by a comma <code>,</code>.</p>
 <h1 id="example-configuration-scripts">Example Configuration Scripts</h1>
 <h2 id="minimal-file-sync">Minimal File Sync</h2>
 <p>This configuration will keep the local <code>C:/_code/_git_example</code> directory in synce with the 

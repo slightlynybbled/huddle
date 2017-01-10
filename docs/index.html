@@ -125,8 +125,43 @@
 auto-scaling environments in which the end number of servers or clients is unknown.  This 
 includes auto-scaling web servers and IoT devices, amongst others.</p>
 <p>Applications are controlled through huddle using <a href="configfiles/">configuration files</a>
-which are written in <code>.json</code> format.  Each file or application to be controlled will
+which are written in <code>.json</code> ir <code>.ini</code> format.  Each file or application to be controlled will
 have its own configuration file, which may be as simple or as complex as the user wishes.</p>
+<p>An example configuration in JSON:</p>
+<pre><code>{
+  "repository": {
+    "remote": "origin",
+    "remote path": "https://github.com/slightlynybbled/dummy.git",
+    "local path": "C:/_code/_git_example",
+    "branch": "master",
+    "executable": "C:/Program Files/Git/bin/git.exe"
+  },
+
+  "timing": {
+    "minimum": 10,
+    "maximum": 20
+  },
+
+  "application": {
+    "start": "python -m dummy_app.py"
+  }
+}
+</code></pre>
+<p>The same configuration as an INI file:</p>
+<pre><code>[repository]
+remote = origin
+remote path: https://github.com/slightlynybbled/dummy.git
+local path: C:/_code/_git_example
+branch: master
+executable: C:/Program Files/Git/bin/git.exe
+
+[timing]
+minimum = 10
+maximum = 20
+
+[application]
+start = python -m dummy_app.py
+</code></pre>
               
             </div>
           </div>
@@ -173,5 +208,5 @@ have its own configuration file, which may be as simple or as complex as the use
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-01-10 16:30:47
+Build Date UTC : 2017-01-10 19:10:45
 -->
