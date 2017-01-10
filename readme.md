@@ -47,6 +47,22 @@ This file will initially start the application using the command under `start`, 
 every 60s to 600s (random).  When an update to the `develop` branch is detected, the application will be halted, the
 local file updated, and the application re-started automatically.
 
+Note that INI is also supported.  The above equivalent configuration:
+
+    [repository]
+    remote = origin
+    remote path: https://github.com/slightlynybbled/dummy.git
+    local path: C:/_code/_git_example
+    branch: develop
+    executable: /usr/bin/git
+    
+    [timing]
+    minimum = 60
+    maximum = 600
+    
+    [application]
+    start = /home/ubuntu/py3env/bin/python -m dummy_app.py
+
 The current flow chart for each application is:
 
 ![flow chart](flow-chart.png)
@@ -61,14 +77,14 @@ prefixed with an underscore `_` will be ignored.
 
     /home/ubuntu/config_files
         /app1.json
-        /app2.json
+        /app2.ini
         /_app3.json
         
 Or, in windows:
 
     C:\config_files
         \app1.json
-        \app2.json
+        \app2.ini
         \_app3.json
         
 Note that `_app3.json` will be ignored.
