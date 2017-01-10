@@ -1,4 +1,4 @@
-<img src="/img/huddle.png" style="float: right; margin-left: 10px;">
+<img src="huddle/img/huddle.png" style="float: right; margin-left: 10px;">
 
 # Huddle
 
