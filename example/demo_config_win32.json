@@ -4,7 +4,7 @@
     "remote path": "https://github.com/slightlynybbled/dummy.git",
     "local path": "C:/_code/_git_example",
     "branch": "master",
-    "executable": "C:/Program Files/Git/bin/git"
+    "executable": "C:/Program Files/Git/bin/git.exe"
   },
 
   "timing": {

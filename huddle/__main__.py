@@ -3,12 +3,18 @@ import os
 import json
 import threading
 import time
+import logging
 
 from huddle.manage import ApplicationManager
 
 
 def main():
     print(sys.argv)
+
+    if '--debug' in sys.argv or '-d' in sys.argv:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
 
     if '-c' in sys.argv:
         index = sys.argv.index('-c') + 1

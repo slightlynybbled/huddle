@@ -37,25 +37,34 @@ class ApplicationManager:
             if sys.platform == 'win32':
                 self.exec = 'C:/Program Files/Git/bin/git'
 
+        logger.debug('git executable: {}'.format(self.exec))
+
         # if the local directory does not exist, then it must be cloned and checked out
-        if not os.path.exists(configuration['repository']['local path']):
-            logger.debug('path not found: {}'.format(configuration['repository']['local path']))
-            logger.debug('cloning repository')
-
-            remote_path = configuration['repository']['remote path']
-            local_path = configuration['repository']['local path']
-
-            script = '{} clone {} {}'.format(self.exec, remote_path, local_path)
-            self.run_script(script)
-
-            os.chdir(configuration['repository']['local path'])
-
-            script = '{} checkout {}'.format(self.exec, self.get_branch(configuration))
-            self.run_script(script)
-        else:
-            logger.debug('path found: {}'.format(configuration['repository']['local path']))
+        path_valid = False
+        while not path_valid:
+            if not os.path.exists(configuration['repository']['local path']):
+                logger.debug('path not found: {}'.format(configuration['repository']['local path']))
+                logger.debug('cloning repository')
+    
+                remote_path = configuration['repository']['remote path']
+                local_path = configuration['repository']['local path']
+    
+                script = '{} clone {} {}'.format(self.exec, remote_path, local_path)
+                self.run_script(script)
+    
+                try:
+                    os.chdir(configuration['repository']['local path'])
+                    path_valid = True
+                except FileNotFoundError:
+                    logger.info('repository not cloned, waiting...')
+                    time.sleep(10.0)
+            else:
+                logger.debug('path found: {}'.format(configuration['repository']['local path']))
+                path_valid = True
 
         os.chdir(configuration['repository']['local path'])
+        script = '{} checkout {}'.format(self.exec, self.get_branch(configuration))
+        self.run_script(script)
 
         if not self.is_new(configuration):
             self.start_application(configuration)
