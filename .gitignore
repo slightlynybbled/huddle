@@ -1,5 +1,4 @@
-.idea/*
-build/*
-dist/*
-*.egg-info/*
-*.pyc
+.idea/
+build/
+dist/
+huddle.egg-info/
