@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 import logging
+import os
 
 
 logger = logging.getLogger(__name__)
@@ -7,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def config_parser_load(path):
     config = ConfigParser()
-    config.read(path, encoding='utf-8')
+    config.read(path)
 
     logger.debug('reading config file from {}'.format(path))
 
@@ -20,10 +21,15 @@ def config_to_dict(config):
     for section in config.sections():
         s = section.strip()
         config_dict[s] = {}
+        logger.debug('section: {}'.format(s))
+
         for key in config[section].keys():
             k = key.strip()
             v = config[section][key].strip()
             config_dict[s][k] = v
+
+            logger.debug('key: {}'.format(k))
+            logger.debug('value: {}'.format(k))
 
             # when commas are present, then create a list of strings
             if ',' in config_dict[s][k]:

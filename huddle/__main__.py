@@ -20,7 +20,10 @@ def main():
     logger.debug('arguments: {}'.format(sys.argv))
 
     if '-c' in sys.argv or '--config' in sys.argv:
-        index = sys.argv.index('-c') + 1
+        if '-c' in sys.argv:
+            index = sys.argv.index('-c') + 1
+        else:
+            index = sys.argv.index('--config') + 1
         directory = os.path.abspath(sys.argv[index])
 
         json_files = [f for f in os.listdir(directory) if '.json' in f.lower()]
@@ -38,6 +41,7 @@ def main():
 
         json_files = [f for f in os.listdir(directory) if '.json' in f.lower()]
         json_files = [f for f in json_files if f[0] != '_']
+
         ini_files = [f for f in os.listdir(directory) if '.ini' in f.lower()]
         ini_files = [f for f in ini_files if f[0] != '_']
 
@@ -57,7 +61,7 @@ def main():
                 thread.start()
                 application_threads.append(thread)
         elif '.ini' in f.lower():
-            config = config_parser_load(f)
+            config = config_parser_load(os.path.join(directory, f))
 
             thread = threading.Thread(target=ApplicationManager, args=(config, ), daemon=True)
             thread.start()
