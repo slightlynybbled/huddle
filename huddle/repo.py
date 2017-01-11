@@ -2,6 +2,7 @@ import subprocess
 import os
 import sys
 
+
 class Repo:
     """ Not intended for direct use, but to enforce a structure """
 
@@ -23,7 +24,8 @@ class Repo:
     def diff(self):
         raise NotImplementedError
 
-    def run_script(self, script):
+    @staticmethod
+    def run_script(script):
         """
         Will run a single command-line script and return the output
 
