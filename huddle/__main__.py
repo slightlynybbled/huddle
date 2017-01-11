@@ -26,10 +26,10 @@ def main():
             index = sys.argv.index('--config') + 1
         directory = os.path.abspath(sys.argv[index])
 
-        json_files = [f for f in os.listdir(directory) if '.json' in f.lower()]
+        json_files = [f for f in os.listdir(directory) if '.json' in os.path.splitext(f.lower())]
         json_files = [f for f in json_files if f[0] != '_']
 
-        ini_files = [f for f in os.listdir(directory) if '.ini' in f.lower()]
+        ini_files = [f for f in os.listdir(directory) if '.ini' in os.path.splitext(f.lower())]
         ini_files = [f for f in ini_files if f[0] != '_']
 
         files = json_files + ini_files
@@ -39,10 +39,10 @@ def main():
         # if no config script is specified, then look for json files in the current directory
         directory = os.path.abspath(os.getcwd())
 
-        json_files = [f for f in os.listdir(directory) if '.json' in f.lower()]
+        json_files = [f for f in os.listdir(directory) if '.json' in os.path.splitext(f.lower())]
         json_files = [f for f in json_files if f[0] != '_']
 
-        ini_files = [f for f in os.listdir(directory) if '.ini' in f.lower()]
+        ini_files = [f for f in os.listdir(directory) if '.ini' in os.path.splitext(f.lower())]
         ini_files = [f for f in ini_files if f[0] != '_']
 
         files = json_files + ini_files
