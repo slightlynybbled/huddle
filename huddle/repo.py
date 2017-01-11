@@ -1,6 +1,10 @@
 import subprocess
 import os
 import sys
+import requests
+from hashlib import sha256
+
+from huddle.util import find_all_files
 
 
 class Repo:
@@ -18,11 +22,12 @@ class Repo:
     def fetch(self):
         raise NotImplementedError
 
+    def diff(self):
+        raise NotImplementedError
+
     def pull(self):
         raise NotImplementedError
 
-    def diff(self):
-        raise NotImplementedError
 
     @staticmethod
     def run_script(script):
@@ -79,12 +84,6 @@ class GitRepo(Repo):
 
         return True, out
 
-    def pull(self):
-        script = '{} pull {} {}'.format(self.exec, self.remote, self.branch)
-        out = self.run_script(script)
-
-        return True, out
-
     def diff(self):
         remote_branch = self.remote + '/' + self.branch
 
@@ -97,4 +96,54 @@ class GitRepo(Repo):
         else:
             return True, out
 
+    def pull(self):
+        script = '{} pull {} {}'.format(self.exec, self.remote, self.branch)
+        out = self.run_script(script)
+
+        return True, out
+
+
+class HttpRepo(Repo):
+
+    def __init__(self, local_path, remote_path, user=None, pw=None):
+        super().__init__(local_path, remote_path)
+
+        self.user = user
+        self.pw = pw
+
+    def clone(self):
+        if self.user or self.pw:
+            r = requests.get(self.remote_path, auth=(self.user, self.pw))
+        else:
+            r = requests.get(self.remote_path, auth=(self.user, self.pw))
+
+        if r.status_code == 200:
+            with open(self.local_path, 'wb') as f:
+                f.write(r.content)
+            return True, ''
+        else:
+            return False, ''
+
+    def fetch(self):
+        """ There is no http equivalent for 'fetch' in http/https """
+        return False, ''
+
+    def diff(self):
+        # calculate md5 hash for all files in current directory that don't start with '_'
+        local_hash = sha256()
+        for file in find_all_files(self.local_path):
+            with open(file, 'rb') as f:
+                local_hash.update(f.read())
+
+        # request the hash from the server
+        server_hash = '0'
+
+        if local_hash.hexdigest() == server_hash:
+            return True, 'local and remote hash are the same'
+        else:
+            return False, 'local ({}) and remote ({}) hashes are different'.format(local_hash, server_hash)
+
+    def pull(self):
+        # in the http context, 'pull' and 'clone' have the same meaning
+        self.clone()
 
