@@ -41,6 +41,7 @@ def config_to_dict(config):
 
     return config_dict
 
+
 def find_all_files(path):
     for file in os.listdir(path):
         full_path = os.path.join(path, file)
