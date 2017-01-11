@@ -5,6 +5,8 @@ import logging
 import random
 import os
 
+from huddle.repo import GitRepo
+
 logger = logging.getLogger(__name__)
 
 
@@ -15,8 +17,9 @@ class ApplicationManager:
         :param config: a dictionary containing the configuration
         """
         self.config = config
-        self.exec = '/usr/bin/git'  # default executable (linux)
+        self.exec = None
         self.app_ref = None
+        self.repo = None
 
         if runner:
             self.load_and_validate()
@@ -30,41 +33,52 @@ class ApplicationManager:
         """
         configuration = config if config else self.config
 
-        # find the local executable
-        if 'executable' in configuration['repository'].keys():
-            self.exec = configuration['repository']['executable']
+        # determine the repository type
+        if 'type' in configuration['repository'].keys():
+            repo_type = configuration['repository']['type'].lower()
         else:
-            if sys.platform == 'win32':
-                self.exec = 'C:/Program Files/Git/bin/git'
+            repo_type = 'git'
 
-        logger.debug('git executable: {}'.format(self.exec))
+        if repo_type == 'git':
+            # find the local executable
+            if 'executable' in configuration['repository'].keys():
+                executable = configuration['repository']['executable']
+            else:
+                executable = None
+
+            local_path = configuration['repository']['local path']
+            remote_path = configuration['repository']['remote path']
+
+            self.repo = GitRepo(local_path, remote_path, executable=executable)
+
+            if 'branch' in configuration['repository'].keys():
+                self.repo.branch = configuration['repository']['branch']
+
+            if 'remote' in configuration['repository'].keys():
+                self.repo.remote = configuration['repository']['remote']
+        else:
+            raise NotImplementedError('repository type not supported: {}'.format(repo_type))
 
         # if the local directory does not exist, then it must be cloned and checked out
         path_valid = False
         while not path_valid:
-            if not os.path.exists(configuration['repository']['local path']):
+            if not os.path.exists(self.repo.local_path):
                 logger.debug('path not found: {}'.format(configuration['repository']['local path']))
                 logger.debug('cloning repository')
-    
-                remote_path = configuration['repository']['remote path']
-                local_path = configuration['repository']['local path']
-    
-                script = '{} clone {} {}'.format(self.exec, remote_path, local_path)
-                self.run_script(script)
+
+                self.repo.clone()
     
                 try:
-                    os.chdir(configuration['repository']['local path'])
+                    os.chdir(self.repo.local_path)
                     path_valid = True
                 except FileNotFoundError:
                     logger.info('repository not cloned, waiting...')
                     time.sleep(10.0)
             else:
-                logger.debug('path found: {}'.format(configuration['repository']['local path']))
+                logger.debug('path found: {}'.format(self.repo.local_path))
                 path_valid = True
 
-        os.chdir(configuration['repository']['local path'])
-        script = '{} checkout {}'.format(self.exec, self.get_branch(configuration))
-        self.run_script(script)
+        self.repo.checkout()
 
         if not self.is_new(configuration):
             self.start_application(configuration)
@@ -124,24 +138,13 @@ class ApplicationManager:
         """
         configuration = config if config else self.config
 
-        local_branch = self.get_branch(configuration)
-        remote_branch = configuration['repository']['remote'] + '/' + local_branch
-
-        script = '{} fetch {} {}'.format(self.exec, configuration['repository']['remote'], local_branch)
-        out = self.run_script(script)
+        _, out = self.repo.fetch()
         logger.debug('fetch output: {}'.format(out))
 
-        script = '{} diff {} {}'.format(self.exec, local_branch, remote_branch)
-        out = self.run_script(script)
+        diff_status, out = self.repo.diff()
         logger.debug('diff output: {}'.format(out))
 
-        # if the output is blank, then the remote branch and the local branch are the same
-        if out.strip() == '':
-            logger.debug('is not new')
-            return False
-        else:
-            logger.debug('is new')
-            return True
+        return diff_status
 
     def tests_pass(self, config=None):
         """
@@ -182,9 +185,7 @@ class ApplicationManager:
         """
         configuration = config if config else self.config
 
-        remote = configuration['repository']['remote']
-        script = '{} pull {} {}'.format(self.exec, remote, self.get_branch(configuration))
-        out = self.run_script(script)
+        _, out = self.repo.pull()
 
         logger.debug('pull output: {}'.format(out))
 
@@ -228,6 +229,7 @@ class ApplicationManager:
 
         if 'application' in configuration.keys():
             if 'start' in configuration['application'].keys():
+                logger.debug('starting application: {}'.format(configuration['application']['start']))
                 parts = configuration['application']['start'].split()
                 self.app_ref = subprocess.Popen(parts, stdout=subprocess.PIPE)
 

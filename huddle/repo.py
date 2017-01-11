@@ -5,8 +5,11 @@ import sys
 class Repo:
     """ Not intended for direct use, but to enforce a structure """
 
-    def __init__(self):
-        pass
+    def __init__(self, local_path, remote_path):
+        self.local_path = local_path
+        self.remote_path = remote_path
+
+        os.chdir(self.local_path)
 
     def clone(self, *args):
         raise NotImplementedError
@@ -36,10 +39,10 @@ class Repo:
         return stdout
 
 
-class Git(Repo):
+class GitRepo(Repo):
 
     def __init__(self, local_path, remote_path, executable=None, branch='master', remote='origin'):
-        super().__init__()
+        super().__init__(local_path, remote_path)
 
         if executable:
             self.exec = executable
@@ -49,8 +52,6 @@ class Git(Repo):
             else:
                 self.exec = '/usr/bin/git'
 
-        self.local_path = local_path
-        self.remote_path = remote_path
         self.branch = branch
         self.remote = remote
 
