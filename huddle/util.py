@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 import logging
+import os
 
 
 logger = logging.getLogger(__name__)
@@ -40,3 +41,10 @@ def config_to_dict(config):
 
     return config_dict
 
+def find_all_files(path):
+    for file in os.listdir(path):
+        full_path = os.path.join(path, file)
+        if os.path.isfile(full_path):
+            yield full_path
+        else:
+            yield from find_all_files(full_path)
