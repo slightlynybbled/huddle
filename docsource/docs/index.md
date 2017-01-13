@@ -47,3 +47,19 @@ The same configuration as an INI file:
     [application]
     start = python -m dummy_app.py
 
+# Motivation
+
+<img src="/huddle/img/git-push-model.png" style="float: right; margin-left: 10px;">
+
+It would appear that most auto-deployment tools are focused on using git hooks and use a 'push'
+model to deploy from Git to various nodes.  In the simplest case, this involves knowing the IP
+address or similar information for each server.  In the most complex cases, this involves 
+a coordinator and workers testing, deploying, and pushing to the servers.
+
+<img src="/huddle/img/pull-model.png" style="float: right; margin-left: 10px;">
+
+In an environment of unknown scale - such as auto-scaling web servers and IoT devices, the 
+devices themselves need to be intelligent enough to self-deploy.  This is where huddle comes
+in.  Each device takes charge of its self and does a pull as the git repository is updated.
+This has the advantage of not requiring any sort of global registry or count of devices and
+scales very well.
