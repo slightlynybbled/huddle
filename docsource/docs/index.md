@@ -63,3 +63,16 @@ devices themselves need to be intelligent enough to self-deploy.  This is where 
 in.  Each device takes charge of its self and does a pull as the git repository is updated.
 This has the advantage of not requiring any sort of global registry or count of devices and
 scales very well.
+
+In addition, huddle will pull from any number of git repositories and initiate any number of 
+applications.  Huddle only requires one configuration script per application.
+
+In auto-scaling environments, typically an initial image is created for the server or IoT device 
+which contains:
+
+ - python environment
+ - huddle installation
+ - appropriate huddle configuration script(s)
+ - huddle loaded at startup (probably `@restart` cron job)
+
+Each server then manages its own application suite!
