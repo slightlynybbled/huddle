@@ -55,6 +55,9 @@
                 <li class="toctree-l3"><a href="#huddle">Huddle</a></li>
                 
             
+                <li class="toctree-l3"><a href="#motivation">Motivation</a></li>
+                
+            
             </ul>
         
     </li>
@@ -163,6 +166,29 @@ maximum = 20
 [application]
 start = python -m dummy_app.py
 </code></pre>
+<h1 id="motivation">Motivation</h1>
+<p><img src="/huddle/img/git-push-model.png" style="float: right; margin-left: 10px;"></p>
+<p>It would appear that most auto-deployment tools are focused on using git hooks and use a 'push'
+model to deploy from Git to various nodes.  In the simplest case, this involves knowing the IP
+address or similar information for each server.  In the most complex cases, this involves 
+a coordinator and workers testing, deploying, and pushing to the servers.</p>
+<p><img src="/huddle/img/pull-model.png" style="float: right; margin-left: 10px;"></p>
+<p>In an environment of unknown scale - such as auto-scaling web servers and IoT devices, the 
+devices themselves need to be intelligent enough to self-deploy.  This is where huddle comes
+in.  Each device takes charge of its self and does a pull as the git repository is updated.
+This has the advantage of not requiring any sort of global registry or count of devices and
+scales very well.</p>
+<p>In addition, huddle will pull from any number of git repositories and initiate any number of 
+applications.  Huddle only requires one configuration script per application.</p>
+<p>In auto-scaling environments, typically an initial image is created for the server or IoT device 
+which contains:</p>
+<ul>
+<li>python environment</li>
+<li>huddle installation</li>
+<li>appropriate huddle configuration script(s)</li>
+<li>huddle loaded at startup (probably <code>@restart</code> cron job)</li>
+</ul>
+<p>Each server then manages its own application suite!</p>
               
             </div>
           </div>
@@ -209,5 +235,5 @@ start = python -m dummy_app.py
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-01-10 20:52:28
+Build Date UTC : 2017-01-13 03:51:07
 -->
