@@ -18,12 +18,8 @@ def remove_readonly(func, path, excinfo):
 
 @pytest.fixture
 def app_manager(request):
-    if sys.platform == 'win32':
-        executable = 'C:/Program Files/Git/bin/git'
-        local_path = 'C:/_code/_git_example'
-    else:
-        executable = '/usr/bin/git'
-        local_path = '/home/ubuntu/git_example'
+    executable = 'C:/Program Files/Git/bin/git'
+    local_path = 'C:/_code/_git_example'
 
     config = {
         'repository': {
@@ -39,38 +35,16 @@ def app_manager(request):
     yield manager
 
     # teardown - delete extra git repository
-    remove_time = 0.0
-    time_inc = 0.1
-    removed = False
-    while remove_time < 10.0 and not removed:
-        try:
-            shutil.rmtree(local_path, onerror=remove_readonly)
-            removed = True
-        except PermissionError:
-            time.sleep(time_inc)
-
-        remove_time += time_inc
+    try:
+        shutil.rmtree(local_path, onerror=remove_readonly)
+    except PermissionError:
+        pass
+    except FileNotFoundError:
+        pass
 
 
 def test_create_app_manager(app_manager):
     assert True
-
-
-def test_default_exec(app_manager):
-    assert app_manager.exec == '/usr/bin/git'
-
-
-def test_win32_exec(app_manager):
-    app_manager.load_and_validate()
-    assert app_manager.exec == 'C:/Program Files/Git/bin/git'
-
-
-def test_custom_exec(app_manager):
-    config = app_manager.config
-    config['repository']['executable'] = 'C:/Program Files/Git/bin/git'
-
-    app_manager.load_and_validate()
-    assert app_manager.exec == 'C:/Program Files/Git/bin/git'
 
 
 def test_default_branch(app_manager):
@@ -78,7 +52,7 @@ def test_default_branch(app_manager):
     config['repository'].pop('branch')
 
     app_manager.load_and_validate()
-    assert app_manager.get_branch() == 'master'
+    assert app_manager.repo.branch == 'master'
 
 
 def test_no_tests_specified(app_manager):

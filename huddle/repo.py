@@ -14,7 +14,10 @@ class Repo:
         self.local_path = local_path
         self.remote_path = remote_path
 
-        os.chdir(self.local_path)
+        try:
+            os.chdir(self.local_path)
+        except FileNotFoundError:
+            pass
 
     def clone(self, *args):
         raise NotImplementedError
