@@ -67,7 +67,7 @@ class ApplicationManager:
                 logger.debug('cloning repository')
 
                 self.repo.clone()
-    
+
                 try:
                     os.chdir(self.repo.local_path)
                     path_valid = True
@@ -79,6 +79,7 @@ class ApplicationManager:
                 path_valid = True
 
         self.repo.checkout()
+        self.post_pull_scripts()
 
         if not self.is_new(configuration):
             self.start_application(configuration)
