@@ -72,6 +72,8 @@ def main():
     while len(files) > 0:
         time.sleep(1)
 
+    print('there are no files currently active, exiting...')
+
 
 if __name__ == '__main__':
     main()
