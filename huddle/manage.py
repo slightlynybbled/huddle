@@ -4,6 +4,7 @@ import sys
 import logging
 import random
 import os
+import signal
 
 from huddle.repo import GitRepo
 
@@ -211,12 +212,7 @@ class ApplicationManager:
         :return:
         """
         if self.app_ref:
-            if sys.platform == 'win32':
-                script = 'Taskkill /PID {} /F'.format(self.app_ref.pid)
-            else:
-                script = 'kill {}'.format(self.app_ref.pid)
-
-            self.run_script(script)
+            os.kill(self.app_ref.pid, signal.CTRL_C_EVENT)
             self.app_ref = None
 
     def start_application(self, config=None):
