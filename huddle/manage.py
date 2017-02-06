@@ -82,8 +82,7 @@ class ApplicationManager:
         self.repo.checkout()
         self.post_pull_scripts()
 
-        if not self.is_new(configuration):
-            self.start_application(configuration)
+        self.start_application(configuration)
 
     def run_script(self, script):
         """
