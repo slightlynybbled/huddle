@@ -2,3 +2,4 @@
 build/
 dist/
 huddle.egg-info/
+huddle/__pycache__/*
