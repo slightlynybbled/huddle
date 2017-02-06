@@ -58,6 +58,12 @@
                 <li class="toctree-l3"><a href="#motivation">Motivation</a></li>
                 
             
+                <li class="toctree-l3"><a href="#capabilities">Capabilities</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#server-requirements">Server Requirements</a></li>
+                
+            
             </ul>
         
     </li>
@@ -178,8 +184,17 @@ in.  Each device takes charge of its self and does a pull as the git repository 
 This has the advantage of not requiring any sort of global registry or count of devices and
 scales very well.</p>
 <p><img src="/huddle/img/pull-model.png" style="float: right; margin-left: 10px;"></p>
+<h1 id="capabilities">Capabilities</h1>
+<p>Huddle will:</p>
+<ul>
+<li>periodically sync the local application branch with the remote repository </li>
+<li>stop/start the local application as required in order to update </li>
+<li>perform health checks using http or via raw sockets, restarting your application if necessary</li>
+<li>perform all of the above on any number of applications</li>
+</ul>
 <p>In addition, huddle will pull from any number of git repositories and initiate any number of 
 applications.  Huddle only requires one configuration script per application.</p>
+<h1 id="server-requirements">Server Requirements</h1>
 <p>In auto-scaling environments, typically an initial image is created for the server or IoT device 
 which contains:</p>
 <ul>
@@ -235,5 +250,5 @@ which contains:</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-01-13 03:55:09
+Build Date UTC : 2017-02-06 19:03:30
 -->

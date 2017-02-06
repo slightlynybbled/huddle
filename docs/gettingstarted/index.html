@@ -136,7 +136,9 @@
               
                 <h1 id="installation">Installation</h1>
 <h2 id="requirements">Requirements</h2>
-<p>In order to properly run Huddle, Git must be installed on the operating system.</p>
+<p>In order to properly run Huddle, Git must be installed on the operating system.  In 
+Windows environments, download and install the appropriate binary.  On Debian systems,
+<code>apt install git</code> will usually do the trick.</p>
 <h2 id="install">Install</h2>
 <p>Huddle may be installed using pip:</p>
 <pre><code>pip install huddle
@@ -183,16 +185,15 @@ to be located in a subdirectory or they will not be parsed.  Note that the
 <code>_app2_config.json</code> file would be ignored since it has a leading underscore <code>_</code>.</p>
 <p>Files may be located anywhere on the file system to which huddle has access.</p>
 <h1 id="starting-huddle">Starting Huddle</h1>
-<p>Once installed, huddle may be started by simply </p>
-<pre><code>huddle -c &lt;config directory&gt;
+<p>Once installed, huddle may be started by simply:</p>
+<pre><code>huddle -c &lt;config directory path&gt;
 </code></pre>
-<p>Huddle will automatically manage each file or application according to its configuration.
-Some systems or installs may require the <code>python -m</code> prefix:</p>
-<pre><code>python -m huddle -c &lt;config directory&gt;
+<p>or on a virtual environment named `py3env':</p>
+<pre><code>./py3env/bin/huddle -c &lt;config directory path&gt;
 </code></pre>
-<p>To run the configuration structure shown above, one would execute:</p>
-<pre><code>huddle -c /home/ubuntu/config_files
-</code></pre>
+<p>On the first instantiation, it may be necessary to add hosts to the ssh known_hosts 
+so that the local machine recognizes remote git repositores without having to type
+'yes' to accept new keys.</p>
               
             </div>
           </div>

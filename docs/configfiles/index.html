@@ -78,6 +78,8 @@
                 
                     <li><a class="toctree-l4" href="#scripts">Scripts</a></li>
                 
+                    <li><a class="toctree-l4" href="#health-monitoringwatchdog">Health Monitoring/Watchdog</a></li>
+                
             
                 <li class="toctree-l3"><a href="#example-configuration-scripts">Example Configuration Scripts</a></li>
                 
@@ -86,6 +88,8 @@
                     <li><a class="toctree-l4" href="#syncingrun-an-application">Syncing/Run an Application</a></li>
                 
                     <li><a class="toctree-l4" href="#sync-applicationreboot-server">Sync Application/Reboot Server</a></li>
+                
+                    <li><a class="toctree-l4" href="#sync-application-with-watchdog">Sync Application with Watchdog</a></li>
                 
             
             </ul>
@@ -302,6 +306,70 @@ pre-pull = /bin/ls /home/ubuntu/ &gt; /home/ubuntu/values.txt, /bin/ls /etc/ &gt
 post-pull = sudo reboot
 </code></pre>
 <p>Note that in the INI file, each command is separated by a comma <code>,</code>.</p>
+<h2 id="health-monitoringwatchdog">Health Monitoring/Watchdog</h2>
+<p>Applications sometimes require health monitoring and restart.  Huddle provides two methods of health 
+monitoring, http-based and socket-based.  The http-based monitoring simply checks the remote URL 
+and ensures that the <code>response</code> string is contained in the URL response.  The socket-based monitoring 
+will poll a socket on the application and ensure that the <code>response</code> string is contained within the 
+response.</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>description</th>
+<th>valid values</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>period</code></td>
+<td>the watchdog period, in seconds</td>
+<td>integer or float</td>
+<td>60</td>
+</tr>
+<tr>
+<td><code>host</code></td>
+<td>the IP address or url to monitor</td>
+<td>http or ip address</td>
+<td>'127.0.0.1'</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>the TCP port to monitor</td>
+<td>string or integer</td>
+<td>60</td>
+</tr>
+<tr>
+<td><code>request</code></td>
+<td>string to be sent to the application</td>
+<td>string</td>
+<td>'watchdog'</td>
+</tr>
+<tr>
+<td><code>response</code></td>
+<td>the expected response from a healthy instance</td>
+<td>string</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<pre><code>"watchdog": {
+    "period": 60,
+    "host": "127.0.0.1",
+    "port": "8888",
+    "request": "watchdog",
+    "response": "OK"
+}
+</code></pre>
+<p>The equivalent INI:</p>
+<pre><code>[watchdog]
+period = 10
+host = 127.0.0.1
+port = 8888
+request = watchdog
+response = OK
+</code></pre>
 <h1 id="example-configuration-scripts">Example Configuration Scripts</h1>
 <h2 id="minimal-file-sync">Minimal File Sync</h2>
 <p>This configuration will keep the local <code>C:/_code/_git_example</code> directory in synce with the 
@@ -355,6 +423,33 @@ will stop the application and reboot the machine with a <code>post-pull</code> s
 
     "scripts": {
         "post-pull": ["/sbin/reboot"]
+    }
+}
+</code></pre>
+<h2 id="sync-application-with-watchdog">Sync Application with Watchdog</h2>
+<p>This configuration will check the remote every 60s and, when new data is available, huddle
+will stop the application, pull the new application version, then restart the application.</p>
+<p>Huddle will also send a query to port 8888 on the local machine every 15 seconds with the 
+string 'watchdog'.  If the response from the application does not contain the string 'OK',
+then huddle will stop the application and restart it.</p>
+<pre><code>{
+    "repository": {
+        "remote": "origin",
+        "remote path": "https://github.com/slightlynybbled/dummy.git",
+        "local path": "C:/_code/_git_example",
+        "executable": "/usr/bin/git"
+    },
+
+    "application": {
+        "start": "python -m dummy_app.py"
+    },
+
+    "watchdog": {
+        "period": 15,
+        "host": "127.0.0.1",
+        "port": "8888",
+        "request": "watchdog",
+        "response": "OK"
     }
 }
 </code></pre>
