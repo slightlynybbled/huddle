@@ -2,7 +2,9 @@
 
 ## Requirements
 
-In order to properly run Huddle, Git must be installed on the operating system.
+In order to properly run Huddle, Git must be installed on the operating system.  In 
+Windows environments, download and install the appropriate binary.  On Debian systems,
+`apt install git` will usually do the trick.
 
 ## Install
 
@@ -66,19 +68,14 @@ Files may be located anywhere on the file system to which huddle has access.
 
 # Starting Huddle 
 
-Once installed, huddle may be started by simply 
+Once installed, huddle may be started by simply:
 
-    huddle -c <config directory>
+    huddle -c <config directory path>
 
-Huddle will automatically manage each file or application according to its configuration.
-Some systems or installs may require the `python -m` prefix:
+or on a virtual environment named `py3env':
 
-    python -m huddle -c <config directory>
+    ./py3env/bin/huddle -c <config directory path>
 
-To run the configuration structure shown above, one would execute:
-
-    huddle -c /home/ubuntu/config_files 
-
-
-
-
+On the first instantiation, it may be necessary to add hosts to the ssh known_hosts 
+so that the local machine recognizes remote git repositores without having to type
+'yes' to accept new keys.

@@ -115,6 +115,39 @@ The equivalent INI:
     
 Note that in the INI file, each command is separated by a comma `,`.
 
+## Health Monitoring/Watchdog
+
+Applications sometimes require health monitoring and restart.  Huddle provides two methods of health 
+monitoring, http-based and socket-based.  The http-based monitoring simply checks the remote URL 
+and ensures that the `response` string is contained in the URL response.  The socket-based monitoring 
+will poll a socket on the application and ensure that the `response` string is contained within the 
+response.
+
+| key           | description                                   | valid values       | default value |
+|---------------|-----------------------------------------------|--------------------|---------------|
+| `period`      | the watchdog period, in seconds               | integer or float   | 60            |
+| `host`        | the IP address or url to monitor              | http or ip address | '127.0.0.1'   |
+| `port`        | the TCP port to monitor                       | string or integer  | 60            |
+| `request`     | string to be sent to the application          | string             | 'watchdog'    |
+| `response`    | the expected response from a healthy instance | string             | -             |
+
+    "watchdog": {
+        "period": 60,
+        "host": "127.0.0.1",
+        "port": "8888",
+        "request": "watchdog",
+        "response": "OK"
+    }
+
+The equivalent INI:
+
+    [watchdog]
+    period = 10
+    host = 127.0.0.1
+    port = 8888
+    request = watchdog
+    response = OK
+
 # Example Configuration Scripts
 
 ## Minimal File Sync 
@@ -175,5 +208,35 @@ will stop the application and reboot the machine with a `post-pull` script.
 
         "scripts": {
             "post-pull": ["/sbin/reboot"]
+        }
+    }
+
+## Sync Application with Watchdog
+
+This configuration will check the remote every 60s and, when new data is available, huddle
+will stop the application, pull the new application version, then restart the application.
+
+Huddle will also send a query to port 8888 on the local machine every 15 seconds with the 
+string 'watchdog'.  If the response from the application does not contain the string 'OK',
+then huddle will stop the application and restart it.
+
+    {
+        "repository": {
+            "remote": "origin",
+            "remote path": "https://github.com/slightlynybbled/dummy.git",
+            "local path": "C:/_code/_git_example",
+            "executable": "/usr/bin/git"
+        },
+
+        "application": {
+            "start": "python -m dummy_app.py"
+        },
+
+        "watchdog": {
+            "period": 15,
+            "host": "127.0.0.1",
+            "port": "8888",
+            "request": "watchdog",
+            "response": "OK"
         }
     }

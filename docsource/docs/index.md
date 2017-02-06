@@ -64,8 +64,19 @@ scales very well.
 
 <img src="/huddle/img/pull-model.png" style="float: right; margin-left: 10px;">
 
+# Capabilities
+
+Huddle will:
+
+ * periodically sync the local application branch with the remote repository 
+ * stop/start the local application as required in order to update 
+ * perform health checks using http or via raw sockets, restarting your application if necessary
+ * perform all of the above on any number of applications
+
 In addition, huddle will pull from any number of git repositories and initiate any number of 
 applications.  Huddle only requires one configuration script per application.
+
+# Server Requirements
 
 In auto-scaling environments, typically an initial image is created for the server or IoT device 
 which contains:
