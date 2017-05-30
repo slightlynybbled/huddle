@@ -1,12 +1,19 @@
+import os
 from setuptools import setup, find_packages
 
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'readme.md')) as f:
+    README = f.read()
+exec(open(os.path.join(here, 'huddle/version.py')).read())
+
 setup(
     name='huddle',
-    version='0.1.4',
+    version=__version__,
     description='A server-oriented auto-deployment utility for any type of program or script',
+    long_description = README,
     author='Jason Jones',
     author_email='slightlynybbled@gmail.com',
     url='https://github.com/slightlynybbled/huddle',

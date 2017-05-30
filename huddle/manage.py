@@ -219,7 +219,10 @@ class ApplicationManager:
         :return:
         """
         if self.app_ref:
-            os.kill(self.app_ref.pid, signal.CTRL_C_EVENT)
+            try:
+                os.kill(self.app_ref.pid, signal.CTRL_C_EVENT)
+            except AttributeError:
+                os.kill(self.app_ref.pid, signal.SIGTERM)
             self.app_ref = None
 
     def start_application(self, config=None):
